@@ -105,13 +105,23 @@ const App: React.FC = () => {
   // 1. Initialization & Data Loading
   useEffect(() => {
     // SECURITY: Control Admin Access based on Build Environment
-    // Safely access env, defaulting to empty object if undefined (e.g. raw browser context)
-    const meta = import.meta as any;
-    const env = meta.env || {};
+    let isBuildEnabled = false;
     
-    // 1. If running locally ('npm run dev'), env.DEV is usually true.
-    // 2. If running in production, DEV is false. Admin is DISABLED unless VITE_ENABLE_ADMIN=true is set.
-    const isBuildEnabled = env.VITE_ENABLE_ADMIN === 'true' || env.DEV === true;
+    try {
+        // @ts-ignore
+        // Safely check for import.meta and import.meta.env
+        const meta = import.meta;
+        // @ts-ignore
+        if (meta && meta.env) {
+            // @ts-ignore
+            const env = meta.env;
+            // 1. If running locally ('npm run dev'), env.DEV is usually true.
+            // 2. If running in production, DEV is false. Admin is DISABLED unless VITE_ENABLE_ADMIN=true is set.
+            isBuildEnabled = env.VITE_ENABLE_ADMIN === 'true' || env.DEV === true;
+        }
+    } catch (e) {
+        console.warn("Environment check failed, defaulting to secure mode.", e);
+    }
     
     if (isBuildEnabled) {
         const hostname = window.location.hostname;
@@ -297,10 +307,11 @@ const App: React.FC = () => {
       {/* Admin Panel Loading (Code Splitting) */}
       {showAdminPanel && isAdminAvailable && (
         <Suspense fallback={null}>
-            {!showEnvelope && !showAdmin && (
+            {!showAdmin && (
                  <button 
                     onClick={() => setShowAdmin(true)} 
-                    className="fixed bottom-24 left-4 z-50 px-4 py-2 bg-black/80 text-white rounded-full shadow-lg text-xs font-bold hover:bg-black transition-all"
+                    // Changed: z-index increased to 200 (above envelope) so it is always clickable in dev mode
+                    className="fixed bottom-24 left-4 z-[200] px-4 py-2 bg-black/80 text-white rounded-full shadow-lg text-xs font-bold hover:bg-black transition-all"
                 >
                     Edit Website
                 </button>

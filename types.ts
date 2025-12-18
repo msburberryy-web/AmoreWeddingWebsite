@@ -85,8 +85,8 @@ export const FONT_OPTIONS = {
 };
 
 export const DEFAULT_DATA: WeddingData = {
-  groomName: { en: 'Aki', ja: 'アキ', my: 'Aki' },
-  brideName: { en: 'Meme', ja: 'メメ', my: 'Meme' },
+  groomName: { en: 'Groom', ja: 'アモーレ', my: 'အမိုး‌ရေး' },
+  brideName: { en: 'Bride', ja: 'メイ', my: 'မေ' },
   date: '2025-05-10T10:00:00',
   showCountdown: true,
   rsvpDeadline: '2025-04-05',
@@ -98,7 +98,7 @@ export const DEFAULT_DATA: WeddingData = {
   message: {
     en: "We invite you to share in our joy as we exchange marriage vows.",
     ja: "このたび 私たちは結婚することになりました\n皆様に見守られながら 新しい人生の第一歩を踏み出したいと存じます",
-    my: "မင်္ဂလာဦးဆုတောင်းသဝဏ်လွှာ။ ကျွန်ုပ်တို့၏ မင်္ဂလာပွဲသို့ ကြွရောက်ချီးမြှင့်ပါရန် ဖိတ်ကြားအပ်ပါသည်။"
+    my: "ကျွန်ုပ်တို့၏ မင်္ဂလာပွဲသို့ ကြွရောက်ချီးမြှင့်ပါရန် ဖိတ်ကြားအပ်ပါသည်။"
   },
   googleFormUrl: '', 
   googleScriptUrl: '',
@@ -138,9 +138,9 @@ export const DEFAULT_DATA: WeddingData = {
     {
       question: { en: "Is parking available?", ja: "駐車場はありますか？", my: "ကားပါကင်ရှိပါသလား?" },
       answer: { 
-        en: "Yes, parking is available at the venue.", 
-        ja: "はい、会場に駐車場がございます。", 
-        my: "ဟုတ်ကဲ့၊ ခန်းမတွင် ကားပါကင်ရှိပါသည်။" 
+        en: "Unfortunately, parking is not available at the venue. Please use nearby public parking.", 
+        ja: "申し訳ございませんが、会場に専用駐車場はございません。近隣のコインパーキングをご利用ください。", 
+        my: "ကားပါကင်မရှိပါ။ ကျေးဇူးပြု၍ အနီးနားရှိ အခပေးကားပါကင်ကို အသုံးပြုပါ။" 
       },
       icon: 'map'
     },
