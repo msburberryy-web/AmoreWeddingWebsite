@@ -10,6 +10,9 @@ import { MapPin, Clock, Volume2, VolumeX, ChevronDown, Camera } from 'lucide-rea
 // Lazy Load Admin Panel - This splits the code into a separate chunk!
 // It will NOT be loaded by guests on the live website.
 const AdminPanel = React.lazy(() => import('./components/AdminPanel'));
+// If the environment says Admin is disabled, this code block becomes "dead code"
+// and the build tool (Vite) will remove it entirely from the public site.
+const showAdminPanel = import.meta.env.VITE_ENABLE_ADMIN === 'true' || import.meta.env.DEV;
 
 const TRANSLATIONS = {
   en: {
@@ -292,7 +295,7 @@ const App: React.FC = () => {
       )}
 
       {/* Admin Panel Loading (Code Splitting) */}
-      {isAdminAvailable && (
+      {showAdminPanel && isAdminAvailable && (
         <Suspense fallback={null}>
             {!showEnvelope && !showAdmin && (
                  <button 
