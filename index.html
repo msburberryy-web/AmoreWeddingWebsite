@@ -1,95 +1,996 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Amore Wedding Tokyo</title>
-    
-    <!-- CRITICAL POLYFILLS FOR GENAI SDK -->
-    <script>
-      window.global = window;
-      window.process = {
-        env: { DEBUG: undefined },
-        version: '',
-        nextTick: function(cb) { setTimeout(cb, 0); }
-      };
-    </script>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;600&family=Zen+Maru+Gothic:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@300;400;500&family=Noto+Serif+Myanmar:wght@400;600&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              serif: ['var(--font-main)', 'serif'],
-              script: ['"Great Vibes"', 'cursive'],
-              sans: ['"Noto Sans JP"', 'sans-serif'],
-            },
-            colors: {
-              'wedding-gold': 'rgb(var(--color-primary) / <alpha-value>)',
-              'wedding-sand': 'rgb(var(--color-bg-tint) / <alpha-value>)',
-              'wedding-text': 'rgb(var(--color-text) / <alpha-value>)',
-            },
-            animation: {
-              'fade-in': 'fadeIn 1.5s ease-in-out',
-              'slide-in': 'slideIn 0.3s ease-out forwards',
-            },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0', transform: 'translateY(10px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              },
-              slideIn: {
-                '0%': { transform: 'translateX(100%)' },
-                '100%': { transform: 'translateX(0)' },
-              }
-            }
-          }
-        }
-      }
-    </script>
-    <style>
-      body {
-        font-family: var(--font-main), sans-serif;
-        color: rgb(var(--color-text));
-        background-color: #FDFBF7;
-      }
-      h1, h2, h3, .font-serif {
-        font-family: var(--font-main), serif;
-      }
-      .font-script {
-        font-family: 'Great Vibes', cursive;
-      }
-      /* Vertical writing utility for Japanese look */
-      .writing-vertical {
-        writing-mode: vertical-rl;
-        text-orientation: upright;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
-    "vite": "https://esm.sh/vite@^7.2.7",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+<!doctype html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>Amoré Wedding Tokyo — Client Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Sans+Myanmar:wght@400;500;600;700;800&family=Noto+Serif+Myanmar:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdfaf5; --surface:#ffffff; --surface-2:#f7f0e6; --ink:#211c18; --muted:#6f645a; --line:#e8ddd0;
+  --rose:#a85d68; --rose-bg:#fdf0f1; --gold:#9c7c3c; --gold-bg:#fbf3df;
+  --green:#2f7d4f; --green-bg:#eaf6ee; --red:#b42318; --red-bg:#fef0ef;
+  --blue:#2b5ea6; --blue-bg:#eaf1fb; --amber:#9a6a12; --amber-bg:#fff4d6;
+  --shadow:0 10px 30px rgba(60,40,20,.08); --radius:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#171412; --surface:#221e1b; --surface-2:#2a2521; --ink:#f3ece4; --muted:#b8aa9d; --line:#3a332d;
+    --rose:#e39aa4; --rose-bg:#3a2328; --gold:#dcbb7a; --gold-bg:#332b1a;
+    --green:#7bc99a; --green-bg:#1e3327; --red:#ff9a8f; --red-bg:#3a2220;
+    --blue:#93b8ec; --blue-bg:#1e2e47; --amber:#eec25e; --amber-bg:#332a12;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
   }
 }
-</script>
-<link rel="stylesheet" href="/index.css">
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Myanmar",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.75;font-size:16px}
+a{color:var(--rose)}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 18px 56px}
+.eyebrow{font-family:"Cormorant Garamond",serif;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--gold);font-weight:700;text-align:center}
+h1{font-family:"Noto Serif Myanmar","Cormorant Garamond",serif;font-size:30px;line-height:1.7;text-align:center;margin:8px 0 6px;font-weight:700}
+h1 .en{font-family:"Cormorant Garamond",serif;font-size:38px;line-height:1.15;display:block;letter-spacing:.02em}
+.lede{text-align:center;color:var(--muted);max-width:640px;margin:0 auto;font-size:15.5px}
+.rule{width:56px;height:2px;background:var(--gold);margin:18px auto;border-radius:2px;opacity:.8}
+
+/* Top actions — Terms popup button stays at the very top */
+.top-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px auto 4px;max-width:760px}
+.terms-btn{display:inline-flex;align-items:center;gap:9px;min-height:52px;padding:12px 22px;border-radius:999px;border:2px solid var(--rose);background:var(--rose);color:#fff;font-family:inherit;font-weight:800;font-size:15.5px;line-height:1.35;cursor:pointer;box-shadow:var(--shadow)}
+.terms-btn:hover{filter:brightness(1.07)}
+.terms-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.terms-note{font-size:12.5px;color:var(--muted);text-align:center;margin:8px auto 0;max-width:640px}
+
+/* Layout: sidebar navigation + main column */
+.layout{display:grid;grid-template-columns:276px minmax(0,1fr);gap:26px;align-items:start;margin-top:20px}
+.maincol{min-width:0}
+.sidebar{position:sticky;top:16px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 14px;box-shadow:var(--shadow);z-index:30}
+.sidebar-label{font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.06em;margin:0 4px 10px}
+.side-tabs{display:flex;flex-direction:column;gap:4px}
+.side-tab{display:flex;gap:11px;align-items:flex-start;min-height:44px;padding:10px 11px;border-radius:13px;border:1.5px solid transparent;color:var(--ink);text-decoration:none;line-height:1.35}
+.side-tab .num{font-family:"Cormorant Garamond",serif;font-weight:700;width:24px;height:24px;border-radius:50%;background:var(--surface-2);display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 auto;margin-top:1px}
+.side-title{display:block;font-weight:800;font-size:14.5px;line-height:1.45}
+.side-sub{display:block;font-weight:500;font-size:12px;color:var(--muted);line-height:1.55;margin-top:1px}
+.side-tab:hover{background:var(--surface-2)}
+.side-tab[aria-selected="true"]{background:var(--rose-bg);border-color:var(--rose)}
+.side-tab[aria-selected="true"] .num{background:var(--rose);color:#fff}
+.side-tab[aria-selected="true"] .side-sub{color:var(--ink)}
+.side-tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.side-terms{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.side-terms-btn{display:flex;width:100%;align-items:center;gap:9px;min-height:48px;padding:10px 12px;border-radius:13px;border:1.5px solid var(--gold);background:var(--gold-bg);color:var(--ink);font-family:inherit;font-weight:800;font-size:14px;line-height:1.4;cursor:pointer;text-align:left}
+.side-terms-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.hash-hint{font-size:12.5px;color:var(--muted);margin:12px 4px 0}
+.hash-hint code{background:var(--surface-2);padding:1px 6px;border-radius:6px;font-size:12px}
+.sidebar-close{display:none}
+.scrim{display:none}
+
+/* Mobile top bar (menu + terms) */
+.mobile-bar{display:none}
+
+/* Terms & Conditions popup — a scrollable paper over the page */
+.modal-backdrop{position:fixed;inset:0;background:rgba(24,16,10,.58);z-index:90;display:flex;align-items:flex-start;justify-content:center;padding:20px 12px}
+.modal-backdrop[hidden]{display:none}
+.modal-paper{background:var(--bg);color:var(--ink);width:min(880px,100%);max-height:calc(100dvh - 40px);overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:20px;padding:0 24px 30px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.modal-head{position:sticky;top:0;z-index:3;background:var(--bg);display:flex;gap:12px;align-items:center;justify-content:space-between;padding:16px 0 12px;border-bottom:2px solid var(--gold)}
+.modal-head h2{margin:0;font-size:19px;line-height:1.45}
+.modal-close{flex:0 0 auto;min-height:44px;padding:9px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-family:inherit;font-weight:800;font-size:14px;cursor:pointer}
+.modal-close:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.modal-body .panel{display:block !important;padding-top:16px}
+body.modal-open{overflow:hidden}
+
+/* Panels */
+.panel{display:none;padding-top:2px}
+.panel.active{display:block}
+.panel-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:6px}
+.panel-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex:0 0 auto}
+.i-rose{background:var(--rose-bg)} .i-gold{background:var(--gold-bg)} .i-green{background:var(--green-bg)} .i-blue{background:var(--blue-bg)} .i-amber{background:var(--amber-bg)}
+.panel-head h2{margin:0;font-size:22px;line-height:1.45}
+.panel-head p{margin:2px 0 0;color:var(--muted);font-size:14.5px}
+.section-link{font-size:12px;color:var(--muted);margin:14px 0 0}
+.section-link code{background:var(--surface-2);border:1px solid var(--line);padding:2px 7px;border-radius:6px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:14px 0;box-shadow:var(--shadow)}
+.card h3{margin:0 0 6px;font-size:17px;line-height:1.5}
+.card p{margin:6px 0}
+.small{font-size:13.5px;color:var(--muted)}
+.badge{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.03em;padding:3px 9px;border-radius:999px;vertical-align:middle}
+.b-rose{background:var(--rose-bg);color:var(--rose)} .b-gold{background:var(--gold-bg);color:var(--gold)} .b-green{background:var(--green-bg);color:var(--green)} .b-blue{background:var(--blue-bg);color:var(--blue)} .b-red{background:var(--red-bg);color:var(--red)} .b-amber{background:var(--amber-bg);color:var(--amber)}
+.grid{display:grid;gap:14px}
+@media(min-width:680px){.grid-2{grid-template-columns:1fr 1fr}.grid-3{grid-template-columns:1fr 1fr 1fr}}
+ul.clean{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+ul.clean li{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+ul.clean li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--rose);margin-top:9px;flex:0 0 auto}
+ul.check{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:9px}
+ul.check li{display:flex;gap:10px;align-items:flex-start}
+ul.check li::before{content:"✓";width:24px;height:24px;border-radius:50%;background:var(--green-bg);color:var(--green);font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto;font-size:13px;margin-top:1px}
+ul.cross li::before{content:"✕";background:var(--red-bg);color:var(--red)}
+.action-rows{display:grid;gap:10px;margin-top:12px}
+.action-row{display:flex;gap:12px;align-items:flex-start;background:var(--surface-2);border-radius:14px;padding:13px 15px}
+.action-num{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--rose);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.action-row p{margin:0;font-size:15px;line-height:1.75}
+code.file{display:block;background:#211c18;color:#ffe9c9;padding:12px 14px;border-radius:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;line-height:1.7;overflow-wrap:anywhere;margin:10px 0}
+@media (prefers-color-scheme: dark){code.file{background:#0f0d0b}}
+.folder-tree{background:var(--surface-2);border:1.5px dashed var(--gold);border-radius:16px;padding:16px 18px;font-size:15px;line-height:2}
+.folder-tree b{font-family:ui-monospace,Menlo,monospace;font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;color:var(--muted);letter-spacing:.03em}
+td.jp{font-weight:800;white-space:nowrap;font-size:16px}
+.timeline{position:relative;margin:8px 0 0;padding-left:22px}
+.timeline::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.tl-item{position:relative;padding:0 0 18px}
+.tl-item::before{content:"";position:absolute;left:-21px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--rose);border:3px solid var(--bg)}
+.tl-item h3{margin:0;font-size:16px}
+.tl-when{font-weight:800;color:var(--rose);font-size:13px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 16px;margin:10px 0}
+summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center;font-size:15.5px}
+details p{color:var(--muted);font-size:14.5px;margin:0 0 14px}
+.foot{text-align:center;color:var(--muted);font-size:13px;margin-top:36px;padding-top:20px;border-top:1px solid var(--line)}
+.foot .en{font-family:"Cormorant Garamond",serif;font-size:18px;color:var(--ink);letter-spacing:.06em}
+.form-btn{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-top:14px;padding:10px 16px;border-radius:999px;background:var(--rose);color:#fff;text-decoration:none;font-weight:700;font-size:14.5px;line-height:1.3}
+.form-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.callout{border-radius:14px;padding:14px 16px;font-size:14.5px;margin:14px 0;line-height:1.7}
+.c-amber{background:var(--amber-bg);border:1px solid #ecd28a} .c-blue{background:var(--blue-bg);border:1px solid #bcd2f5} .c-green{background:var(--green-bg);border:1px solid #a9d8bb}
+@media (prefers-color-scheme: dark){.c-amber,.c-blue,.c-green{border-color:var(--line)}}
+
+/* Date calculator */
+.calc-box{background:var(--surface);border:1.5px solid var(--gold);border-radius:20px;padding:20px;box-shadow:var(--shadow);margin:14px 0}
+.calc-box label{font-weight:800;font-size:15px;display:block;margin-bottom:8px}
+.calc-row{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+.calc-row input[type="date"]{flex:1 1 220px;min-height:52px;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--ink);background:var(--surface-2);border:1.5px solid var(--line);border-radius:12px}
+.calc-note{font-size:13px;color:var(--muted);margin-top:10px}
+.calc-empty{color:var(--muted);font-size:14.5px;border:1.5px dashed var(--line);border-radius:14px;padding:16px;text-align:center;margin-top:14px}
+.ms-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
+.ms-item{display:flex;gap:12px;align-items:flex-start;background:var(--surface-2);border-radius:14px;padding:12px 14px}
+.ms-item.past{opacity:.55}
+.ms-date{flex:0 0 auto;min-width:118px;font-weight:800;font-size:14px;line-height:1.5}
+.ms-date .dow{color:var(--rose);font-size:12.5px;display:block}
+.ms-body{font-size:14.5px;line-height:1.6}
+.ms-body b{display:block;font-size:15px}
+.ms-tag{display:inline-block;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--rose-bg);color:var(--rose);margin-left:6px;vertical-align:middle}
+.ms-item.past .ms-tag{background:var(--surface);color:var(--muted)}
+.ics-area{margin-top:16px;border-top:1px dashed var(--line);padding-top:16px}
+.ics-btn{display:inline-flex;align-items:center;gap:9px;min-height:52px;padding:12px 22px;border-radius:999px;border:2px solid var(--rose);background:var(--rose);color:#fff;font-family:inherit;font-weight:800;font-size:15.5px;line-height:1.35;cursor:pointer;box-shadow:var(--shadow)}
+.ics-btn:hover{filter:brightness(1.07)}
+.ics-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.ics-help{margin:14px 0 2px;padding:2px 14px}
+.ics-help summary{font-size:14.5px;min-height:40px}
+.ics-help p{margin:0 0 10px;font-size:14px}
+.gcal-box{margin:16px 0 2px;padding:2px 14px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.gcal-box summary{font-size:15px}
+.gcal-list{list-style:none;margin:8px 0 12px;padding:0;display:grid;gap:8px}
+.gcal-item{display:flex;gap:10px;align-items:center;justify-content:space-between;background:var(--surface-2);border-radius:12px;padding:9px 10px 9px 12px}
+.gcal-meta{min-width:0}
+.gcal-date{font-size:12.5px;font-weight:800;color:var(--rose);line-height:1.4}
+.gcal-title{font-size:14px;font-weight:700;line-height:1.45}
+.gcal-add{flex:0 0 auto;display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border-radius:999px;background:var(--blue);color:#fff;text-decoration:none;font-weight:800;font-size:13.5px;line-height:1.2;white-space:nowrap}
+.gcal-add:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media (prefers-color-scheme: dark){.gcal-add{background:#2b5ea6;color:#fff}}
+.count-chip{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px;margin-top:12px}
+@media (prefers-color-scheme: dark){.count-chip{background:#f3ece4;color:#211c18}}
+.agenda{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:5px}
+.agenda li{display:flex;gap:8px;font-size:14px;align-items:flex-start}
+.agenda li::before{content:"–";color:var(--gold);font-weight:800;flex:0 0 auto}
+
+/* Tablet & mobile: sidebar becomes a slide-in drawer, opened from the top bar */
+@media (max-width:920px){
+  .layout{grid-template-columns:1fr;gap:0;margin-top:12px}
+  .mobile-bar{display:flex;gap:8px;align-items:center;position:sticky;top:0;z-index:50;background:var(--bg);padding:10px 0 8px;border-bottom:1px solid var(--line)}
+  .menu-btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:10px 16px;border-radius:999px;border:1.5px solid var(--rose);background:var(--rose);color:#fff;font-family:inherit;font-weight:800;font-size:14.5px;cursor:pointer;flex:0 0 auto}
+  .menu-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .mobile-bar .terms-btn{min-height:46px;padding:9px 14px;font-size:13.5px;background:var(--surface);color:var(--rose);box-shadow:none;flex:1 1 auto;justify-content:center}
+  .sidebar{position:fixed;top:0;left:0;bottom:0;width:min(86vw,330px);border-radius:0;border:none;border-right:1px solid var(--line);padding:18px 14px 26px;overflow-y:auto;-webkit-overflow-scrolling:touch;transform:translateX(-106%);transition:transform .26s ease;z-index:95}
+  .sidebar.open{transform:none;box-shadow:0 0 60px rgba(0,0,0,.35)}
+  .sidebar-close{display:inline-flex;align-items:center;min-height:40px;padding:7px 14px;margin:0 4px 10px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface-2);color:var(--ink);font-family:inherit;font-weight:800;font-size:13.5px;cursor:pointer}
+  .scrim{display:block;position:fixed;inset:0;background:rgba(24,16,10,.5);z-index:94;opacity:0;pointer-events:none;transition:opacity .26s ease}
+  .scrim.show{opacity:1;pointer-events:auto}
+  .hash-hint{display:none}
+  .top-actions{display:none}
+  .terms-note{display:none}
+  .modal-backdrop{padding:10px 8px}
+  .modal-paper{max-height:calc(100dvh - 20px);padding:0 16px 24px;border-radius:16px}
+  .modal-head h2{font-size:16.5px}
+}
+/* Mobile: maximise the readable area — compact hero */
+@media (max-width:640px){
+  .wrap{padding:14px 12px 44px}
+  h1{font-size:24px;margin-top:4px}
+  h1 .en{font-size:30px}
+  .lede{font-size:14.5px}
+  .rule{margin:12px auto}
+  .panel{padding-top:10px}
+  .panel-head{gap:10px}
+  .panel-icon{width:40px;height:40px;font-size:20px;border-radius:12px}
+  .panel-head h2{font-size:19px}
+  .panel-head p{font-size:14px}
+  .card{padding:14px;margin:12px 0}
+  /* Calculator milestone rows stack: date line above the text */
+  .ms-item{flex-direction:column;gap:3px;padding:11px 12px}
+  .ms-date{min-width:0;font-size:13.5px}
+  .ms-date .dow{display:inline;margin-left:8px}
+  .calc-box{padding:16px}
+  .folder-tree{padding:12px 14px;font-size:14px;line-height:1.9}
+  th,td{padding:9px 8px}
+}
+@media (prefers-reduced-motion: reduce){
+  .sidebar,.scrim{transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Amoré Wedding Tokyo</p>
+  <h1><span class="en">Client Portal</span>မင်္ဂလာပွဲ ပြင်ဆင်မှု လမ်းညွှန်</h1>
+  <p class="lede">ပထမ consultation ကနေ ပွဲနေ့အထိ ကိုယ်တိုင် လုပ်လို့ရတဲ့ self-service portal ပါ — အပိုင်းတွေကို <strong>sidebar</strong> (ဖုန်းမှာဆိုရင် <strong>「☰ အပိုင်းများ」</strong> ခလုတ်) ကနေ ရွေးကြည့်လို့ ရပြီး၊ <strong>My Plan</strong> မှာ wedding date ထည့်လိုက်တာနဲ့ ဘယ်ရက်မှာ ဘာလုပ်ရမလဲ အလိုအလျောက် ပေါ်လာပါမယ်။ <strong>အရင်ဆုံး My Plan ကနေ စပြီး ကိုယ့်ရက်တွေကို အရင် ကြည့်ထားပါ။</strong></p>
+
+  <!-- Terms & Conditions — important, so it stays at the top as a popup button -->
+  <div class="top-actions">
+    <button type="button" class="terms-btn terms-open-btn" aria-haspopup="dialog">📜 Terms &amp; Conditions · 注意事項 — အရင် ဖတ်ရန်</button>
+  </div>
+  <p class="terms-note">စည်းကမ်းတွေက အရေးကြီးလို့ အပေါ်ဆုံးမှာ ထားထားပါတယ် — နှိပ်လိုက်ရင် စာရွက် အပြည့်အစုံ popup ပွင့်လာပြီး အောက်ကို scroll လုပ်ပြီး အကုန် ဖတ်လို့ ရပါတယ်။</p>
+  <div class="rule"></div>
+
+  <!-- Mobile top bar: sidebar menu + terms popup -->
+  <div class="mobile-bar">
+    <button type="button" class="menu-btn" id="sidebar-open" aria-controls="sidebar" aria-expanded="false">☰ အပိုင်းများ</button>
+    <button type="button" class="terms-btn terms-open-btn" aria-haspopup="dialog">📜 Terms &amp; Conditions</button>
+  </div>
+
+  <div class="layout">
+  <!-- Sidebar navigation — categories with sub-titles -->
+  <aside class="sidebar" id="sidebar" aria-label="Guide အပိုင်းများ">
+    <button type="button" class="sidebar-close" id="sidebar-close">✕ ပိတ်ရန်</button>
+    <p class="sidebar-label">အပိုင်းကို ရွေးပါ — SECTIONS</p>
+    <nav class="side-tabs" role="tablist">
+      <a class="side-tab" role="tab" id="tab-plan" href="#plan" data-tab="plan"><span class="num">★</span><span><span class="side-title">My Plan</span><span class="side-sub">Wedding Date ထည့်ပြီး ရက်တွေ တွက်ပါ · Calculator · Journey အဆင့် ၈ ဆင့်</span></span></a>
+      <a class="side-tab" role="tab" id="tab-forms" href="#forms" data-tab="forms"><span class="num">1</span><span><span class="side-title">Forms ဖြည့်ရန်</span><span class="side-sub">申込書 · MC &amp; Music · Styling · Photo &amp; Video</span></span></a>
+      <a class="side-tab" role="tab" id="tab-photos" href="#photos" data-tab="photos"><span class="num">2</span><span><span class="side-title">Web Invitation</span><span class="side-sub">ဖိတ်စာ အချက်အလက် · Cover / Profile / Couple ပုံများ</span></span></a>
+      <a class="side-tab" role="tab" id="tab-music" href="#music" data-tab="music"><span class="num">3</span><span><span class="side-title">Music &amp; Video</span><span class="side-sub">入場 · 中座 · 再入場 · 退場 · File နာမည် တပ်နည်း</span></span></a>
+      <a class="side-tab" role="tab" id="tab-meetings" href="#meetings" data-tab="meetings"><span class="num">4</span><span><span class="side-title">Meetings &amp; Agenda</span><span class="side-sub">Meeting ၁–၄ · Agenda · ကြိုပြင်ထားရန်</span></span></a>
+      <a class="side-tab" role="tab" id="tab-timeline" href="#timeline" data-tab="timeline"><span class="num">5</span><span><span class="side-title">Key Dates &amp; စည်းကမ်းများ</span><span class="side-sub">Venue ပိတ် −၅ ပတ် · လူအရေအတွက် −၂ ပတ် · Lock −၁ ပတ်</span></span></a>
+      <a class="side-tab" role="tab" id="tab-studio" href="#studio" data-tab="studio"><span class="num">6</span><span><span class="side-title">Studio &amp; FAQ</span><span class="side-sub">Dress Fitting · Makeup Trial · မေးလေ့ရှိတဲ့ မေးခွန်းများ</span></span></a>
+      <a class="side-tab" role="tab" id="tab-share" href="#share" data-tab="share"><span class="num">7</span><span><span class="side-title">Photos — ဓာတ်ပုံ Share</span><span class="side-sub">Drive Folder ၃ ခု · ပို့နည်း · Delivery ၄–၆ ပတ်</span></span></a>
+    </nav>
+    <div class="side-terms">
+      <button type="button" class="side-terms-btn terms-open-btn" aria-haspopup="dialog">📜 Terms &amp; Conditions · 注意事項<span style="font-weight:500;font-size:12px;display:block">နှိပ်ရင် စာရွက် အပြည့်အစုံ popup ပွင့်ပါမယ်</span></button>
+    </div>
+    <p class="hash-hint">အပိုင်း တစ်ခုချင်းစီကို သီးသန့် link နဲ့ ပို့လို့ ရပါတယ် — ဥပမာ <code>#plan</code> · <code>#photos</code> · <code>#share</code> ဆိုပြီး page link နောက်မှာ တွဲထည့်ရုံပါပဲ။ Terms အတွက် <code>#terms</code> က popup ကို ဖွင့်ပေးပါတယ်။</p>
+  </aside>
+  <div class="scrim" id="sidebar-scrim"></div>
+
+  <main class="maincol">
+
+  <!-- 0. MY PLAN / DATE CALCULATOR -->
+  <section class="panel" id="panel-plan" role="tabpanel" aria-labelledby="tab-plan" data-panel="plan">
+    <div class="panel-head">
+      <div class="panel-icon i-gold">🗓️</div>
+      <div><h2>My Plan — Wedding Date ထည့်ပြီး ရက်တွေ တွက်ပါ</h2><p>သင့် wedding date ကို ရွေးလိုက်တာနဲ့ Amoré ရဲ့ planning guideline အတိုင်း ဘယ်ရက်မှာ ဘာလုပ်ရမလဲ အလိုအလျောက် ထွက်လာပါမယ်။ Team နဲ့ နှစ်ဖက်လုံး ဒီ ရက်တွေကိုပဲ အတူတူ သုံးပါတယ်။</p></div>
+    </div>
+
+    <h3 style="margin:22px 0 4px">သင့် Wedding Journey — အဆင့် ၈ ဆင့်</h3>
+    <p class="small" style="margin:0 0 6px">ပထမ consultation ကနေ ပွဲနေ့အထိ ခရီးစဉ် အကြမ်းဖျင်းပါ — ကိုယ့်ရက် အတိအကျကိုတော့ အဆင့်တွေ အားလုံးရဲ့ အောက်ဆုံးမှာ ရှိတဲ့ My Plan calculator နဲ့ တွက်ကြည့်ပါ။</p>
+    <div class="timeline">
+      <div class="tl-item"><span class="tl-when">STEP 1 · ပထမ CONSULTATION ပြီးနောက်</span><h3>Rough Plan အတည်ပြုခြင်း + First Deposit</h3><p class="small">Amoré နဲ့ ပထမ consultation လုပ်ပြီးလို့ Amoré နဲ့ ဆက်လုပ်ဖို့ ဆုံးဖြတ်ရင် — wedding ရဲ့ <strong>rough plan</strong> (ရက် ခန့်မှန်း၊ guest ခန့်မှန်း၊ လိုချင်တဲ့ ပုံစံ အကြမ်း) ကို အရင် အတည်ပြုပြီး Amoré ဆီ <strong>first deposit</strong> ပေးပေးပါ။ ဒါမှ နောက်တစ်ဆင့် စလို့ ရပါမယ်။</p></div>
+      <div class="tl-item"><span class="tl-when">STEP 2 · VENUE ရှာဖွေခြင်း</span><h3>Venue တွေ လိုက်ကြည့်ခြင်း + Terms &amp; Conditions စစ်ခြင်း</h3><p class="small">Venue ရှာဖွေမှု ခရီးစဉ် စပါပြီ — venue တစ်ခုချင်းကို ကြည့်ပြီး သူ့ရဲ့ <strong>Terms &amp; Conditions</strong> ကို သေချာ စစ်ပါ (allergy / အစားအသောက် ကန့်သတ်ချက် support ရှိမရှိ အပါအဝင် — venue တိုင်းက မပေးနိုင်ပါဘူး)။ Venue contract ချုပ်ဆိုတာကိုလည်း <strong>Amoré က သင့်ကိုယ်စား ဆောင်ရွက်ပေးလို့ ရပါတယ်</strong>။ <strong>မှတ်ချက် — အစီအစဉ် ပြောင်းလို့လည်း ရပါတယ်:</strong> venue ကို အရင် ရှာကြည့်ပြီးမှ rough plan အတည်ပြု + first deposit ပေးတာလည်း ရပါတယ် (Step 1 နဲ့ Step 2 ကို အပြန်အလှန် ပြောင်းလို့ ရပါတယ်)။</p></div>
+      <div class="tl-item"><span class="tl-when">STEP 3 · VENUE CHECK ပြီးနောက်</span><h3>Second Deposit + FORM 1 (申込書) ပို့ခြင်း</h3><p class="small">Venue check ပြီးသွားရင် — <strong>on-site လာကြည့်တာဖြစ်ဖြစ်၊ online က စစ်တာဖြစ်ဖြစ်</strong> — အတည်ပြုဖို့ Amoré ဆီ <strong>second deposit</strong> ပေးပေးပါ။ အဲဒီနောက် <strong>FORM 1 — 申込書 (Application Form)</strong> ကို ပို့ပေးပါမယ်။ ကျန်တဲ့ form တွေနဲ့ Action Item တွေက အဲဒီနောက် ဆက်လာပါမယ် — အသေးစိတ်ကို <a href="#forms">Forms</a> tab မှာ ကြည့်ပါ။</p></div>
+      <div class="tl-item"><span class="tl-when">STEP 4 · BOOKING အတည်ပြုပြီးနောက်</span><h3>Welcome &amp; Kickoff</h3><p class="small">見積 နဲ့အတူ စာချုပ် အတည်ပြုပြီးတာနဲ့ intake form တွေနဲ့ Action Item ၄ ခုကို စဖြည့်ပါ — အသေးစိတ်ကို <a href="#forms">Forms</a> tab မှာ ကြည့်ပါ။</p></div>
+      <div class="tl-item"><span class="tl-when">STEP 5 · ပွဲမတိုင်ခင် ၃–၄ လ</span><h3>ဖိတ်စာ ပေးပို့ခြင်း · အစီအစဉ် ပုံဖော်ခြင်း</h3><p class="small">ဖိတ်စာ စတင် ပေးပို့ပြီး၊ MC &amp; Music · studio visit · web invitation · styling &amp; decoration အတွက် တာဝန်ခံ (担当者) နဲ့ တွေ့ဆုံမယ့် ရက်တွေကို ချိန်းဆိုပါတယ်။ <strong>ဝတ်စုံနဲ့ accessories ကို ဒီ အဆင့်မှာ အပြီးသတ် ရွေးချယ်ရပါမယ်။</strong></p></div>
+      <div class="tl-item"><span class="tl-when">STEP 6 · ပွဲမတိုင်ခင် ၄ ပတ်</span><h3>အသေးစိတ် အတည်ပြုခြင်း</h3><p class="small">ဧည့်သည် ဦးရေ၊ seating နဲ့ run sheet ကို အတည်ပြုပြီး program ကို ပြန်လည် သုံးသပ်ပါတယ်။ <strong>Allergy / အစားအသောက် ကန့်သတ်ချက်</strong> ရှိတဲ့ guest တွေ ရှိရင် ဒီ အဆင့်မတိုင်ခင် ကတည်းက ပြောပြထားပါ — <strong>venue တိုင်းက allergy support မပေးနိုင်ပါဘူး</strong>၊ venue နဲ့ ကြိုစစ်ထားဖို့ လိုပါတယ်။ ပါဝင်ဆောင်ရွက်မယ့် သူတွေ (အရံများ၊ လက်ဖွဲ့ထိုင်၊ အမှတ်တရ စကားပြောမယ့်သူ) ကိုလည်း အကြောင်းကြားပါ — <strong>လက်ဆောင်ပြန်ကမ်း (return gift) တွေကိုလည်း ဒီ အဆင့်မှာ ပြင်ဆင်ပြီးသား ဖြစ်ရပါမယ်။</strong></p></div>
+      <div class="tl-item"><span class="tl-when">STEP 7 · ပွဲမတိုင်ခင် ၂ ပတ်</span><h3>နောက်ဆုံး 見積 နဲ့ ကျန်ငွေ လွှဲပြောင်းခြင်း</h3><p class="small">အတည်ပြုချက်တွေ အားလုံး ပြီးစီးပြီးနောက် planner က နောက်ဆုံး 見積 (final estimate) ကို ထုတ်ပေးပါတယ် — ကျန်ငွေကို အဲဒီနောက် လွှဲပြောင်းပေးပါ။</p></div>
+      <div class="tl-item"><span class="tl-when">STEP 8 · WEDDING DAY</span><h3>💒 မင်္ဂလာဆောင်နေ့</h3><p class="small">ပွဲနေ့ကို စိတ်အေး လက်အေး ပျော်ရွှင်စွာ ဆင်နွှဲပါ — ပြင်ဆင်မှုတွေကို team က တာဝန်ယူ ဆောင်ရွက်ပေးပါမယ်။</p></div>
+    </div>
+
+    <div class="callout c-amber"><strong>⚠️ အားလပ်ရက် ရှည်ကြီးနဲ့ တိုက်နေရင် —</strong> New Year / Golden Week / Obon လို အားလပ်ရက် ရှည်ကြီးက ပွဲမတိုင်ခင် နောက်ဆုံး ၂ ပတ်ထဲမှာ ပါနေရင် FINAL meeting နဲ့ Lock ရက်တွေ <strong>စောပြီး</strong> ရွှေ့ရတတ်ပါတယ် (ဥပမာ January အစောပိုင်း ပွဲတွေဆို FINAL ကို December လယ် လောက်မှာ လုပ်ရပါတယ်)။ သင့် ရက်က အဲဒီလို တိုက်နေရင် team ကို စောစော ပြောပြပေးပါ။</div>
+    <div class="callout c-blue"><strong>🔀 Meeting ရက် လွန်သွားပြီဆိုရင် —</strong> Booking နောက်ကျလို့ meeting တစ်ခု ရက်က လွန်သွားပြီဆိုရင် အဲဒီ meeting ရဲ့ အကြောင်းအရာတွေကို အနီးဆုံး လာမယ့် meeting ထဲ ပေါင်းထည့်ပြီး ဆွေးနွေးပါတယ်။ စိုးရိမ်စရာ မလိုပါဘူး — My Plan မှာ လွန်သွားတဲ့ ရက်တွေကို မီးခိုးရောင် နဲ့ ပြထားပါတယ်။</div>
+    <h3 style="margin:26px 0 4px">My Plan Calculator — ကိုယ့်ရက်တွေ တွက်ကြည့်ပါ</h3>
+    <p class="small" style="margin:0 0 6px">အဆင့်တွေ ကြည့်ပြီးရင် ကိုယ့် wedding date ကို ထည့်ပြီး ကိုယ်ပိုင် deadline ရက်တွေကို တွက်ကြည့်ပါ။</p>
+    <div class="calc-box">
+      <label for="wedding-date">💒 သင့် Wedding Date ကို ရွေးပါ</label>
+      <div class="calc-row">
+        <input type="date" id="wedding-date" aria-describedby="calc-note">
+      </div>
+      <p class="calc-note" id="calc-note">ရက်တွေ အားလုံးကို guideline စည်းကမ်း — Meeting 1 (−၄ လ) · Invitation (−၂ လခွဲ) · Meeting 3 + RSVP (−၁ လ) · Venue စာရင်းပိတ် (−၅ ပတ်) · လူအရေအတွက် အပြီးသတ် (−၂ ပတ်) · FINAL (−၂ ပတ်) · Data Lock (−၁ ပတ်) — နဲ့ တွက်ထားပါတယ်။ Lock ရက်တွေ အပိုင်းလိုက် မတူတာ သတိပြုပါ။</p>
+      <div id="calc-output"><div class="calc-empty">📅 အပေါ်မှာ wedding date ရွေးလိုက်ရင် သင့် deadline စာရင်း ဒီနေရာမှာ ပေါ်လာပါမယ်။</div></div>
+      <div class="ics-area" id="ics-area" hidden>
+        <p style="margin:0 0 10px;font-weight:800;font-size:15px">📲 Calendar ထဲ ထည့်ရန် — နည်းလမ်း ၂ မျိုး</p>
+        <p class="calc-note" style="margin:0 0 12px">✅ <strong>အလွယ်ဆုံး (အကြံပြုထား)</strong> — အောက်က Google Calendar list မှာ milestone တစ်ခုချင်းစီကို <strong>Add</strong> နှိပ်ရုံပါပဲ။ File download / import မလိုပါ၊ iPhone / Android / computer အကုန် အလုပ်လုပ်ပါတယ်။<br>📥 <strong>.ics file နည်း</strong> — computer မှာ တစ်ခါတည်း အကုန် import လုပ်ချင်ရင် (သို့) Apple Calendar အတွက် Mail နည်း သုံးချင်ရင် အောက်က download ခလုတ်ကို သုံးပါ။</p>
+
+        <details class="gcal-box" id="gcal-details" open>
+          <summary>📅 Google Calendar ထဲ တစ်ခုချင်း ထည့်ရန် — Add ကို နှိပ်ပါ</summary>
+          <p class="small" style="margin:6px 0 4px">နှိပ်လိုက်ရင် Google Calendar (app / web) မှာ event အသင့်ဖြည့်ပြီး ပွင့်လာပါမယ် — <strong>Save</strong> နှိပ်ရုံပါပဲ။ ရက်တွေက အပေါ်က calculator တွက်တဲ့ ရက် အတိအကျပါပဲ။</p>
+          <ul class="gcal-list" id="gcal-list"></ul>
+        </details>
+
+        <div style="margin-top:16px">
+          <button type="button" class="ics-btn" id="ics-download">📅 Calendar file download လုပ်ပါ (.ics) — computer / Mail အတွက်</button>
+        </div>
+        <details class="ics-help">
+          <summary>🍎 iPhone Apple Calendar / .ics file ထည့်နည်း — အရင် ဖတ်ပါ</summary>
+          <p><strong>⚠️ iPhone Files app ထဲမှာ ဖွင့်ရင် ရက်စာရင်း preview ပဲ မြင်ရပြီး import လုပ်လို့ မရနိုင်ပါ — ဒါ ပုံမှန်ပါပဲ၊ file ပျက်နေတာ မဟုတ်ပါဘူး။</strong> ဒီ page ကို internet ပေါ် တင်ထားတာ မဟုတ်လို့ Files app ကနေ တိုက်ရိုက် Calendar ထဲ ထည့်ပေးတဲ့ လမ်းကြောင်း မရှိပါဘူး။</p>
+          <p><strong>🍎 Apple Calendar ထဲ ထည့်ချင်ရင် —</strong> .ics file ကို <strong>email နဲ့ ကိုယ့်ဆီ ပြန်ပို့ပြီး iPhone ရဲ့ Mail app ထဲက attachment ကို ဖွင့်ပါ</strong> → အဲဒီမှာ <strong>「Add All」</strong> ပေါ်လာပါမယ်။</p>
+          <p><strong>💻 Computer ရှိရင် အလွယ်ဆုံးပါ —</strong> calendar.google.com → ⚙️ Settings → <strong>Import &amp; export → Import</strong> → .ics file ရွေးပါ။ Mac Apple Calendar ဆိုရင် file ကို double-click လုပ်ရုံပါပဲ။</p>
+          <p><strong>💡 အကြံပြုချက် —</strong> ဖုန်းပဲ ရှိရင် file ကို မကြိုးစားပါနဲ့၊ အပေါ်က <strong>Google Calendar Add</strong> ခလုတ်တွေကိုပဲ သုံးပါ — တူညီတဲ့ ရက်တွေ အတိုင်း ဝင်သွားပါမယ်။</p>
+        </details>
+        <p class="calc-note">ဒီ Google Calendar link တွေနဲ့ .ics file ထဲမှာ အပေါ်က deadline ရက်တွေ အားလုံး အတူတူပါပဲ — Amoré team က ပို့တဲ့ link / file ကို client က သုံးရင် နှစ်ဖက်လုံး ရက်တူ၊ အစီအစဉ် တူ ဖြစ်နေပါမယ်။</p>
+      </div>
+    </div>
+    <p class="section-link">ဒီ အပိုင်းရဲ့ link: <code>#plan</code></p>
+  </section>
+
+  <!-- 1. FORMS -->
+  <section class="panel" id="panel-forms" role="tabpanel" aria-labelledby="tab-forms" data-panel="forms">
+    <div class="panel-head">
+      <div class="panel-icon i-rose">📝</div>
+      <div><h2>၁။ Booking ပြီးတာနဲ့ ဖြည့်ရမယ့် Form များ</h2><p>အစီအစဉ်က ဒီလိုပါ — ပထမ consultation ပြီးရင် rough plan အတည်ပြုပြီး <strong>first deposit</strong>၊ ပြီးရင် venue ရှာဖွေ / စစ်ဆေးပြီး venue contract (Amoré က ကိုယ်စား ဆောင်ရွက်ပေးလို့ ရ)၊ venue check ပြီးရင် <strong>second deposit</strong> နဲ့ အတည်ပြုပါတယ်။ <strong>အဲဒီနောက် အရင်ဆုံး FORM 1 — 申込書 ကို ပို့ပေးပါမယ်</strong>၊ ကျန်တဲ့ intake pack က အဲဒီနောက် ဆက်လာပါမယ်။ Form အားလုံးကို <strong>Meeting 1 မတိုင်ခင် ၂ ပတ် အလို</strong> အထိ အပြီးဖြည့်ပေးပါ — ကိုယ့်ရက် အတိအကျကို <a href="#plan">My Plan</a> မှာ တွက်ကြည့်လို့ ရပါတယ်။</p></div>
+    </div>
+
+    <div class="card">
+      <span class="badge b-rose">START HERE</span>
+      <h3>Booking ပြီးတာနဲ့ လုပ်ရမယ့် Action Item ၄ ခု</h3>
+      <p>စာချုပ် အတည်ပြုပြီးတာနဲ့ ဒီ ၄ ခုကို တစ်ခုချင်း စလုပ်ပေးပါ —</p>
+      <div class="action-rows">
+        <div class="action-row"><span class="action-num">၁</span><p><strong>Web Invitation အချက်အလက်များ</strong> — RSVP နောက်ဆုံးရက်၊ ရက်စွဲနဲ့ အချိန်တွေ (受付 Uketsuke စတင်ချိန်နဲ့ party စတင်ချိန်)၊ နှစ်ယောက်ရဲ့ နာမည် English · 日本語 · မြန်မာ သုံးမျိုးလုံး ပို့ပေးပါ။ ဖိတ်စာကို သင် တောင်းဆိုထားတဲ့ ရက်မှာ ပေးပို့ပါမယ်။</p></div>
+        <div class="action-row"><span class="action-num">၂</span><p><strong>MC &amp; Music Form</strong> — ပွဲ အစီအစဉ် စီးဆင်းပုံနဲ့ သီချင်း mood ကို ဖော်ပြပေးပါ။ မသေချာသေးတဲ့ နေရာတွေ ချန်ထားခဲ့လို့ ရပါတယ်။</p></div>
+        <div class="action-row"><span class="action-num">၃</span><p><strong>Dress &amp; Accessories</strong> — Studio visit အတွက် message နဲ့ အချိန်ချိန်းပေးပါ (လိပ်စာနဲ့ အသေးစိတ်က <a href="#studio">Studio</a> tab မှာ ရှိပါတယ်)။</p></div>
+        <div class="action-row"><span class="action-num">၄</span><p><strong>Styling &amp; Decoration Form</strong> — ကြိုက်တဲ့ အရောင်၊ mood နဲ့ မပါမဖြစ် လိုချင်တဲ့ ပစ္စည်း (must-have items) တွေကို မျှဝေပေးပါ။</p></div>
+      </div>
+      <p style="margin-top:12px"><strong>✔️ Form ပို့ပြီးရင် စစ်ရမယ့် အချက် —</strong> form တစ်ခုချင်း submit လုပ်ပြီးတိုင်း သင့် response က team ဆီ တကယ် ရောက်မရောက် (team ရဲ့ sheet / doc ထဲ ဝင်မဝင်) ကို message နဲ့ အတည်ပြုပေးပါ။ မရောက်သေးရင် team က ပြောပြပေးပါမယ် — ဒါမှ အချက်အလက် ပျောက်တာ မဖြစ်မှာ။</p>
+    </div>
+
+    <div class="grid grid-3">
+      <article class="card">
+        <span class="badge b-rose">FORM 1</span>
+        <h3>申込書 — Application Form</h3>
+        <p>စုံတွဲ နှစ်ယောက်ရဲ့ အခြေခံ အချက်အလက်တွေ ဖြည့်ရမှာပါ။ Venue check ပြီးလို့ second deposit နဲ့ အတည်ပြုပြီးတာနဲ့ <strong>အရင်ဆုံး ပို့ပေးမယ့် form</strong> ပါ။</p>
+        <ul class="clean">
+          <li>နာမည် (Romaji + မြန်မာ)၊ မွေးနေ့၊ ဆက်သွယ်ရန်</li>
+          <li>Wedding date၊ venue၊ guest ခန့်မှန်း အရေအတွက်</li>
+          <li>လိုချင်တဲ့ service တွေ — photo / video / dress / makeup</li>
+        </ul>
+        <a class="form-btn" href="https://docs.google.com/forms/d/1D-OhOmPmUg0pN-LLnGytxv473MuVVc97ETbU4H6oDRQ/viewform" target="_blank" rel="noopener">📝 Form ဖြည့်ရန် →</a>
+      </article>
+      <article class="card">
+        <span class="badge b-gold">FORM 2</span>
+        <h3>MC &amp; Music Form</h3>
+        <p>ပွဲနေ့ အစီအစဉ် (program) နဲ့ သီချင်း ရွေးချယ်မှုတွေ အတွက်ပါ။</p>
+        <ul class="clean">
+          <li>Scene အလိုက် သုံးမယ့် သီချင်းတွေ ရွေးပေးပါ</li>
+          <li>MC က ဖတ်ပေးရမယ့် မိတ်ဆက် စာသားတွေ</li>
+          <li>File ပို့နည်းက <a href="#music">Music &amp; Video</a> အပိုင်းမှာ ကြည့်ပါ</li>
+        </ul>
+        <a class="form-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfQQGQSVft2lZlPCBHwitkmJBi-dKCaM3j9inzCqVXwxZDgmQ/viewform" target="_blank" rel="noopener">📝 Form ဖြည့်ရန် →</a>
+      </article>
+      <article class="card">
+        <span class="badge b-blue">FORM 3</span>
+        <h3>Styling Form</h3>
+        <p>Dress၊ hair &amp; makeup အတွက် ကြိုက်တဲ့ ပုံစံတွေ ပြောပြဖို့ပါ။</p>
+        <ul class="clean">
+          <li>ကြိုက်တဲ့ dress / hairstyle / makeup ပုံစံ (reference ပုံ တွဲလို့ ရ)</li>
+          <li>Size နဲ့ အရပ်၊ ရှောင်ရမယ့် ပုံစံတွေ</li>
+          <li>Fitting ရက် ရွေးဖို့ အဆင်ပြေတဲ့ ရက်တွေ</li>
+        </ul>
+        <a class="form-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSe8SK41-uGOoZMr5RUUtPfmodt4PD2KFxCxCXT9DcbfNm72Rw/viewform?usp=header" target="_blank" rel="noopener">📝 Form ဖြည့်ရန် →</a>
+      </article>
+    </div>
+
+    <div class="grid grid-2">
+      <article class="card">
+        <span class="badge b-green">PHOTO &amp; VIDEO</span>
+        <h3>Photo &amp; Video အကြောင်း</h3>
+        <p>Photo / video service က သီးသန့် form မဟုတ်ဘဲ ဒီလို လည်ပတ်ပါတယ် —</p>
+        <ul class="clean">
+          <li><strong>Service ရွေးချယ်မှု</strong> — 申込書 (Form 1) ထဲမှာ photo / video / same-day edit စတာတွေကို ရွေးရပါတယ်</li>
+          <li><strong>Profile movie / memory movie</strong> သုံးမယ်ဆိုရင် video file တွေကို Drive နဲ့ ပို့ပါ — file နာမည် အရှေ့မှာ <strong>プロフィール / メモリームービー</strong> တပ်ပါ (<a href="#music">Music &amp; Video</a> အပိုင်းမှာ အသေးစိတ်)</li>
+          <li><strong>ဓာတ်ပုံတွေ</strong> — Folder ၃ ခု ခွဲပြီး Drive link share ပါ (<a href="#share">Photos Share</a> အပိုင်း)</li>
+          <li>File အားလုံး <strong>FINAL meeting (−၂ ပတ်)</strong> အထိ အပြီးပို့ပေးပါ — နောက်ကျရင် ပွဲနေ့ ပြသဖို့ စစ်ဆေးချိန် မလောက်တော့ပါဘူး</li>
+        </ul>
+      </article>
+      <article class="card">
+        <span class="badge b-amber">WEB INVITATION</span>
+        <h3>Web Invitation အချက်အလက်များ</h3>
+        <p>Venue / date အတည်ပြုပြီးတာနဲ့ Web Invitation Form အပြင် ဒီ အချက်တွေကိုလည်း message နဲ့ ပို့ပေးပါ —</p>
+        <ul class="clean">
+          <li>နှစ်ယောက်ရဲ့ နာမည် — <strong>English / 日本語 / မြန်မာ</strong> သုံးမျိုးလုံး</li>
+          <li>Wedding date၊ reception / party စတင်ချိန်</li>
+          <li>Guest တွေ အတွက် <strong>RSVP deadline</strong> (ပွဲမတိုင်ခင် ၁ လ ခန့်)</li>
+          <li>ဓာတ်ပုံ — cover ၁ ပုံ၊ profile တစ်ယောက် ၁ ပုံ၊ couple ၅ ပုံ ကို ကိုယ့် Drive မှာ သတ်မှတ် file နာမည်တွေနဲ့ တင်ပြီး link share ပါ</li>
+        </ul>
+        <a class="form-btn" href="https://forms.gle/wo4VAKz83ehg1h8F7" target="_blank" rel="noopener">💌 Web Invitation Form ဖြည့်ရန် →</a>
+      </article>
+    </div>
+
+    <div class="callout c-blue"><strong>📝 Form ဖြည့်ချိန် အကြံပြုချက် —</strong> Deadline က <strong>Meeting 1 မတိုင်ခင် ၂ ပတ်</strong> ပါ (ကိုယ့်ရက် အတိအကျကို <a href="#plan">My Plan</a> မှာ တွက်ကြည့်ပါ) — ဒါပေမဲ့ အလျင်စလို အကုန် ပြည့်စုံအောင် ဖြည့်စရာ မလိုပါဘူး။ အရင် သိပြီးသား အချက်တွေကို အရင်ဖြည့်ပြီး၊ <strong>မသေချာတဲ့ နေရာတွေကို ကွက်လပ် ချန်ထားခဲ့ပါ</strong> — အဲဒီ နေရာတွေကို ဆွေးနွေးဖို့ပဲ meeting တွေ ရှိထားတာပါ။ ဖြည့်လို့ ရသလောက် ဖြည့်ပြီးရင် team ကို message တစ်စောင် အသိပေးပေးပါ၊ ကျန်တာကို တာဝန်ခံနဲ့ အတူ Meeting 1 မှာ ပြီးစီးအောင် လုပ်သွားပါမယ်။ <strong>Submit ပြီးရင် သင့် response က team ရဲ့ sheet / doc ဆီ တကယ် ရောက်မရောက် ကိုလည်း အဲဒီ message နဲ့ အတူ အတည်ပြုပေးပါ</strong> — မရောက်သေးရင် ပြန်ပို့ပေးပါ။</div>
+    <div class="callout c-amber"><strong>⚠️ နာမည် စာလုံးပေါင်း သတိပြုပါ —</strong> Form တိုင်းမှာ နာမည်ကို <strong>တစ်ပုံစံတည်း</strong> ရေးပါ။ Romaji စာလုံးပေါင်း လွဲရင် invitation၊ name card၊ seating chart တွေအထိ လွဲသွားတတ်ပါတယ်။</div>
+    <div class="callout c-green"><strong>➡️ နောက်တစ်ဆင့် —</strong> Form တွေ ပို့ပြီးရင် <a href="#meetings">Meetings</a> tab မှာ Meeting 1 ရဲ့ agenda ကို ကြိုကြည့်ထားပါ — ဘာတွေ ဆွေးနွေးမလဲ သိထားရင် ပထမ meeting က ပိုမြန်ပြီး ပိုထိရောက်ပါတယ်။</div>
+    <p class="section-link">ဒီ အပိုင်းရဲ့ link: <code>#forms</code></p>
+  </section>
+
+  <!-- 2. PHOTOS -->
+  <section class="panel" id="panel-photos" role="tabpanel" aria-labelledby="tab-photos" data-panel="photos">
+    <div class="panel-head">
+      <div class="panel-icon i-green">💌</div>
+      <div><h2>၂။ Web Invitation</h2><p>Web Invitation အတွက် လိုတဲ့ အချက်အလက်နဲ့ ဓာတ်ပုံတွေပါ။ ဓာတ်ပုံ ပို့နည်း အသေးစိတ် (Drive folder ခွဲနည်း) ကို သီးသန့် tab ဖြစ်တဲ့ <a href="#share">Photos — ဓာတ်ပုံ Share</a> အပိုင်းမှာ ခွဲထားပါတယ်။</p></div>
+    </div>
+
+    <div class="card">
+      <h3>Invitation အတွက် လိုတဲ့ ဓာတ်ပုံများ</h3>
+      <ul class="check">
+        <li><span><strong>Cover ပုံ — ၁ ပုံ</strong> (အလှဆုံး၊ မျက်နှာ ရှင်းရှင်း မြင်ရတဲ့ ပုံ)</span></li>
+        <li><span><strong>Profile ပုံ — တစ်ယောက် ၁ ပုံစီ</strong></span></li>
+        <li><span><strong>Couple ပုံ — ၅ ပုံ ဝန်းကျင်</strong></span></li>
+        <li><span>လင်းပြီး ကြည်လင်တဲ့ ပုံကို ရွေးပါ၊ dark / blur ပုံ မသုံးပါနဲ့</span></li>
+      </ul>
+      <p class="small" style="margin-top:10px">ပုံတွေကို Drive မှာ Folder ၃ ခု (For Invitation · For Photoboard Print · For Other Paper Items) ခွဲပြီး link share ပို့နည်း အသေးစိတ်ကို <a href="#share">Photos — ဓာတ်ပုံ Share</a> tab မှာ ကြည့်ပါ။</p>
+    </div>
+
+    <div class="callout c-green"><strong>⏱️ ဘယ်တော့ ရမလဲ —</strong> ဖိတ်စာကို <strong>သင် တောင်းဆိုထားတဲ့ ရက်မှာ</strong> ပေးပို့ပါမယ်။ ဖိတ်စာမှာ သုံးမယ့် ဓာတ်ပုံတွေက သင် image folder တွေထဲမှာ ထည့်ထားတဲ့ ပုံတွေ အတိုင်းပဲ သုံးပေးမှာမို့ folder ထဲ ထည့်ချိန်မှာ ကိုယ်သုံးချင်တဲ့ ပုံတွေကိုပဲ ရွေးထည့်ပေးပါ။ <strong>စစ်ရမယ့် အချက်က တစ်ခုပဲ ရှိပါတယ်</strong> — form ဖြည့်ပြီး submit လုပ်ပြီးရင် သင့် response က team ဆီ တကယ် ရောက်မရောက် (team ရဲ့ sheet / doc ထဲ ဝင်မဝင်) ကို message နဲ့ အတည်ပြုပေးပါ။ မရောက်သေးဘူး ဆိုရင် team က ပြောပြပေးပါမယ်။</div>
+    <div class="callout c-blue"><strong>💌 Web Invitation အတွက် စာသားတွေ —</strong> ဖိတ်စာမှာ ပါမယ့် နှစ်ယောက်ရဲ့ မိတ်ဆက် စာသား၊ ပွဲနေ့ အချိန်/နေရာ အချက်အလက်တွေကိုလည်း တစ်ခါတည်း စုပြီး ပို့ပေးပါ။ နာမည်နဲ့ စာသား စာလုံးပေါင်းကို ပို့ချိန်မှာ တစ်ခါတည်း သေချာ စစ်ပြီး ပို့ပေးပါ။<br><a class="form-btn" href="https://forms.gle/wo4VAKz83ehg1h8F7" target="_blank" rel="noopener">💌 Web Invitation Form ဖြည့်ရန် →</a></div>
+    <p class="section-link">ဒီ အပိုင်းရဲ့ link: <code>#photos</code></p>
+  </section>
+
+  <!-- 3. MUSIC -->
+  <section class="panel" id="panel-music" role="tabpanel" aria-labelledby="tab-music" data-panel="music">
+    <div class="panel-head">
+      <div class="panel-icon i-gold">🎵</div>
+      <div><h2>၃။ Music &amp; Video — File နာမည် တပ်နည်း</h2><p>သီချင်း / video file နာမည် <strong>အရှေ့မှာ</strong> ပွဲအစီအစဉ် အလိုက် scene နာမည်ကို တပ်ပေးပါ။ ဒါမှ ပွဲနေ့မှာ မှားဖွင့်တာ မဖြစ်မှာ။</p></div>
+    </div>
+
+    <div class="callout c-amber"><strong>💡 အရေးကြီး မှတ်ချက် —</strong> သီချင်း / video file တိုင်းရဲ့ နာမည် <strong>အရှေ့မှာ</strong> scene နာမည် (入場 / 中座 / 再入場 / 退場 / カラオケ / プロフィール / メモリームービー) ကို တပ်ပေးပါ — ဒါမှ ပွဲနေ့မှာ ဘယ် scene အတွက် ဆိုတာ ချက်ချင်း ခွဲခြားနိုင်မှာပါ။</div>
+
+    <div class="card">
+      <h3>Scene နာမည်များ — ဒီ ၇ ခုထဲက သုံးပါ</h3>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>File မှာ တပ်ရမယ့် နာမည်</th><th>ဘယ် အချိန်မှာ သုံးလဲ</th><th>အမျိုးအစား</th></tr></thead>
+        <tbody>
+          <tr><td class="jp">入場</td><td>စုံတွဲ ပွဲထဲ ဝင်ရောက်ချိန်</td><td>Music</td></tr>
+          <tr><td class="jp">中座</td><td>ကြားမှာ ခဏ ထွက် / အဝတ်လဲချိန်</td><td>Music</td></tr>
+          <tr><td class="jp">再入場</td><td>အဝတ်လဲပြီး ပြန်လည် ဝင်ရောက်ချိန်</td><td>Music</td></tr>
+          <tr><td class="jp">退場</td><td>ပွဲအပြီး ထွက်ခွာချိန်</td><td>Music</td></tr>
+          <tr><td class="jp">カラオケ</td><td>Karaoke / သီဆို ဖျော်ဖြေချိန်</td><td>Music</td></tr>
+          <tr><td class="jp">プロフィール</td><td>Profile movie ပြချိန်</td><td>Video</td></tr>
+          <tr><td class="jp">メモリームービー</td><td>Memory movie ပြချိန်</td><td>Video</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>File နာမည် ဥပမာ — ဒီပုံစံ အတိုင်း ထားပါ</h3>
+      <code class="file">入場 - SongName.mp3
+中座 - SongName.mp3
+再入場 - SongName.mp3
+退場 - SongName.mp3
+カラオケ - SongName.mp3
+プロフィール - MovieName.mp4
+メモリームービー - MovieName.mp4</code>
+      <ul class="check">
+        <li><span>MC &amp; Music Form မှာ ရွေးထားတဲ့ သီချင်းနဲ့ file နာမည် <strong>တူအောင်</strong> ထားပါ</span></li>
+        <li><span>Scene တစ်ခုမှာ သီချင်း ၂ ပုဒ် သုံးရင် <strong>入場1 / 入場2</strong> လို နံပါတ် တပ်ပေးပါ</span></li>
+        <li><span>Video တွေကို အရည်အသွေး အပြည့် မူရင်း file အတိုင်း ပို့ပါ</span></li>
+        <li><span>File လဲရင် နာမည် နောက်မှာ <strong>“အသစ်” / NEW</strong> လို့ မှတ်ပြီး အဟောင်းနဲ့ မရောအောင် ပြောပြပေးပါ</span></li>
+      </ul>
+    </div>
+
+    <div class="callout c-amber"><strong>⚠️ အဖြစ်များတဲ့ အမှား —</strong> file နာမည်က <em>“track01.mp3”</em> / <em>“video_final2.mp4”</em> လို ဖြစ်နေရင် ပွဲနေ့မှာ ဘယ် scene အတွက် ဆိုတာ ခွဲမရတော့ပါဘူး။ ပို့ခင် နာမည်ကို တစ်ခါပြန် စစ်ပေးပါ။</div>
+    <p class="section-link">ဒီ အပိုင်းရဲ့ link: <code>#music</code></p>
+  </section>
+
+  <!-- 4. MEETINGS -->
+  <section class="panel" id="panel-meetings" role="tabpanel" aria-labelledby="tab-meetings" data-panel="meetings">
+    <div class="panel-head">
+      <div class="panel-icon i-blue">📅</div>
+      <div><h2>၄။ Meeting အစီအစဉ် — ၄ ကြိမ် + Agenda</h2><p>Planner နဲ့ client meeting က guideline အတိုင်း <strong>၄ ကြိမ်</strong> ပါ — ပွဲမတိုင်ခင် ၄ လ / ၂ လ / ၁ လ၊ FINAL က ၂ ပတ် အလိုမှာပါ။ ကိုယ့်ရက် အတိအကျကို <a href="#plan">My Plan</a> မှာ တွက်ကြည့်ပါ။ Meeting မတိုင်ခင် ၅ ရက် လောက်မှာ အဲဒီ meeting ရဲ့ brief ကို team က ကြိုပို့ပေးပါတယ်။</p></div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item"><span class="tl-when">MEETING 1 · ပွဲမတိုင်ခင် − ၄ လ</span><h3>ပထမ တွေ့ဆုံမှု — ပုံစံ အကြမ်း သတ်မှတ်ခြင်း</h3>
+        <p class="small" style="margin-bottom:4px"><strong>Agenda —</strong></p>
+        <ul class="agenda">
+          <li>လိုချင်တဲ့ wedding ပုံစံ / vibe နဲ့ ဦးစားပေး အချက် ၃ ခု</li>
+          <li>Budget ဘောင် နဲ့ guest ခန့်မှန်း အရေအတွက်</li>
+          <li>Venue အခြေအနေ — ရွေးပြီးသား / အတူ ရှာမလား</li>
+          <li>Intake form တွေ (申込書 · MC &amp; Music · Styling) စစ်ဆေးခြင်း</li>
+          <li>ရှေ့ဆက် အစီအစဉ် — meeting ရက်တွေ၊ deadline တွေ အတည်ပြုခြင်း</li>
+        </ul>
+        <p class="small"><strong>ကြိုပြင်ထားရန် —</strong> form အားလုံး အပြီးဖြည့်ထားပါ (deadline: ဒီ meeting မတိုင်ခင် ၂ ပတ်)၊ ကြိုက်တဲ့ ပုံစံ reference ပုံတွေ စုထားပါ။</p>
+      </div>
+      <div class="tl-item"><span class="tl-when">MEETING 2 · ပွဲမတိုင်ခင် − ၂ လ</span><h3>Venue &amp; Vendor အတည်ပြုခြင်း</h3>
+        <p class="small" style="margin-bottom:4px"><strong>Agenda —</strong></p>
+        <ul class="agenda">
+          <li>Venue စည်းကမ်း — carry-in fee၊ setup / teardown အချိန်၊ projector / screen အခြေအနေ၊ allergy / အစားအသောက် ကန့်သတ်ချက် support ရှိမရှိ (venue တိုင်းက မပေးနိုင်လို့ ကြိုစစ်ထားရပါမယ်)</li>
+          <li>Vendor တွေ အတည်ပြုခြင်း — photo / video / makeup / dress</li>
+          <li>Decoration concept — အရောင်၊ theme၊ placement တွေ</li>
+          <li>Web Invitation အခြေအနေ စစ်ခြင်း (ဖိတ်ကြားချိန် −၂ လခွဲ နီးလာပြီ)</li>
+        </ul>
+        <p class="small"><strong>ကြိုပြင်ထားရန် —</strong> decoration reference ပုံတွေ၊ venue နဲ့ ပတ်သက်ပြီး မေးချင်တာတွေ စုထားပါ။</p>
+      </div>
+      <div class="tl-item"><span class="tl-when">MEETING 3 · ပွဲမတိုင်ခင် − ၁ လ</span><h3>အသေးစိတ် ညှိနှိုင်းမှု</h3>
+        <p class="small" style="margin-bottom:4px"><strong>Agenda —</strong></p>
+        <ul class="agenda">
+          <li>Program အစီအစဉ် အသေးစိတ် — scene အလိုက် အချိန်၊ သီချင်း၊ MC စာသား</li>
+          <li>Seating chart နဲ့ paper items — name card၊ menu၊ seating board</li>
+          <li>Allergy / အစားအသောက် ကန့်သတ်ချက် နောက်ဆုံး စာရင်း — venue တိုင်းက allergy support မပေးနိုင်တာမို့ ကြိုစစ်ထားတဲ့ အတိုင်း အတည်ပြုခြင်း</li>
+          <li>Dress fitting နဲ့ hair &amp; makeup rehearsal ရက်တွေ သတ်မှတ်ခြင်း</li>
+          <li>Decoration တာဝန်ခံ (PIC) နဲ့ သီးသန့် meeting လည်း ဒီ ကာလမှာပဲ လုပ်ပါတယ်</li>
+          <li><strong>RSVP deadline က ဒီနေ့ ပါပဲ</strong> — guest နာမည် စာရင်းကို ဒီနေ့မှာ ပေးပါ (လူအရေအတွက် အတိအကျ အပြီးသတ်ကတော့ −၂ ပတ် အထိ ပြောင်းလို့ ရပါသေးတယ်)</li>
+        </ul>
+        <p class="small"><strong>ကြိုပြင်ထားရန် —</strong> guest list နောက်ဆုံး အခြေအနေ၊ program မှာ ထည့်ချင်တဲ့ အစီအစဉ် အထူးတွေ (surprise၊ speech စသည်) စုထားပါ။</p>
+      </div>
+      <div class="tl-item"><span class="tl-when">FINAL MEETING · ပွဲမတိုင်ခင် − ၂ ပတ်</span><h3>နောက်ဆုံး အတည်ပြုမှု + MC Final</h3>
+        <p class="small" style="margin-bottom:4px"><strong>Agenda —</strong></p>
+        <ul class="agenda">
+          <li>Guest စာရင်း နောက်ဆုံး စစ်ဆေးခြင်း — လူအရေအတွက် အပြီးသတ်လည်း ဒီနေ့မှာပဲ ပိတ်ပါတယ်</li>
+          <li>ပွဲနေ့ အချိန်ဇယား (timeline) နဲ့ flow တစ်ခုလုံး စစ်ခြင်း</li>
+          <li>MC final — MC စာသား၊ နာမည် အသံထွက်၊ သီချင်း / video file အားလုံး နောက်ဆုံး စစ်ခြင်း</li>
+          <li>ပွဲနေ့ ဆက်သွယ်ရန် လူ / ဖုန်း၊ အရေးပေါ် အစီအစဉ်</li>
+        </ul>
+        <p class="small"><strong>မှတ်ရန် —</strong> FINAL meeting ပြီးရင် client meeting ထပ်မရှိတော့ပါဘူး။ Lock တွေ အပိုင်းလိုက် မတူပါဘူး — <strong>ခန်းမ အပိုင်း စာရင်းပိတ် −၅ ပတ်</strong>၊ <strong>လူအရေအတွက် အပြီးသတ် −၂ ပတ်</strong>၊ အတွင်းပိုင်း <strong>Data Lock −၁ ပတ်</strong>။ အသေးစိတ်ကို <a href="#timeline">Key Dates</a> အပိုင်းမှာ ကြည့်ပါ။</p>
+      </div>
+    </div>
+
+    <div class="card"><h3>👥 အဓိက ဆက်သွယ်ရမယ့် သူ — ဘယ်သူ့ကို မေးရမလဲ</h3><p><strong>Producer</strong> တစ်ယောက်က စာချုပ် ချုပ်ဆိုချိန်ကနေ kickoff အထိ လမ်းညွှန်ပေးပြီး၊ <strong>Planner</strong> တစ်ယောက်က Step 5 (ပွဲမတိုင်ခင် ၃–၄ လ) ခန့်ကနေ ပွဲနေ့အထိ ဦးဆောင်ပေးပါမယ်။ နှစ်ယောက်လုံးက ဒီ portal နဲ့ သင့် လက်ရှိ အဆင့်ကို မြင်တွေ့နိုင်လို့ မေးခွန်းကို ဘယ်သူ့ကို ပို့ပို့ အဆင်ပြေပါတယ်။</p></div>
+
+    <div class="callout c-amber"><strong>📅 အားလပ်ရက် ရှည်ကြီး စည်းကမ်း —</strong> New Year / Golden Week / Obon က ပွဲမတိုင်ခင် နောက်ဆုံး ၂ ပတ်ထဲ ပါနေရင် FINAL meeting နဲ့ Lock ကို စောရွှေ့ပါတယ်။ သင့် wedding က အဲဒီ ကာလနဲ့ နီးရင် team နဲ့ စောစော ညှိပါ။</div>
+
+    <div class="card"><h3>Meeting တိုင်းမတိုင်ခင် ပြင်ထားပေးပါ</h3><ul class="check"><li><span>အဲဒီ meeting အတွက် သတ်မှတ်ထားတဲ့ form / data ကို အပြီးဖြည့်ထားပါ</span></li><li><span>မေးချင်တဲ့ မေးခွန်းတွေကို တစ်ခါတည်း စုရေးထားပါ</span></li><li><span>ကြိုက်တဲ့ ပုံစံ reference ပုံတွေ ရှိရင် ယူလာပါ / ကြိုပို့ထားပါ</span></li><li><span>ရက် / အချိန် ပြောင်းဖို့ လိုရင် စောစော အကြောင်းကြားပေးပါ</span></li></ul></div>
+    <p class="section-link">ဒီ အပိုင်းရဲ့ link: <code>#meetings</code></p>
+  </section>
+
+  <!-- 5. TIMELINE -->
+  <section class="panel" id="panel-timeline" role="tabpanel" aria-labelledby="tab-timeline" data-panel="timeline">
+    <div class="panel-head">
+      <div class="panel-icon i-amber">⏰</div>
+      <div><h2>၅။ အရေးကြီး ရက်တွေ &amp; Data ပို့နည်း စည်းကမ်းများ</h2><p>ရက်တွေ လွန်သွားရင် print နဲ့ vendor စီစဉ်မှုတွေ နောက်ကျတတ်လို့ ဒီ ရက်တွေကို မှတ်ထားပေးပါ။</p></div>
+    </div>
+
+    <div class="callout c-blue"><strong>🔒 Lock တွေ အပိုင်းလိုက် မတူပါ —</strong> ခန်းမ အပိုင်း စာရင်းပိတ် <strong>−၅ ပတ်</strong> · လူအရေအတွက် <strong>−၂ ပတ်</strong> အထိ ပြောင်းလို့ ရ · Amoré Data Lock <strong>−၁ ပတ်</strong>။ အသေးစိတ်ကို အောက်မှာ ခွဲပြထားပါတယ်။</div>
+
+    <div class="grid grid-3">
+      <article class="card" style="text-align:center"><span class="badge b-rose">− ၂ လခွဲ</span><h3>Web Invitation</h3><p>ဖိတ်စာ အပြီးသတ် / စတင် ဖိတ်ကြားရမယ့် အချိန်</p></article>
+      <article class="card" style="text-align:center"><span class="badge b-amber">− ၁ လ</span><h3>RSVP Deadline</h3><p>Guest တွေ အဖြေ ပြန်ပေးရမယ့် နောက်ဆုံး ရက်</p></article>
+      <article class="card" style="text-align:center"><span class="badge b-red">− ၁ ပတ် · FINAL LOCK</span><h3>Data အားလုံး Lock</h3><p>Seating၊ paper item စာသားတွေ အပြီးသတ် — အဲဒီနောက် ပြင်ဖို့ အရမ်း ခက်သွားပါတယ် (လူအရေအတွက်က −၂ ပတ် မှာ ပိတ်ပြီး)</p></article>
+    </div>
+
+    <h3 style="margin:22px 0 4px">Lock / Deadline တွေ — အပိုင်းလိုက် မတူပါ</h3>
+    <p class="small" style="margin:0 0 6px">ပိတ်ရက်က တစ်ပိုင်းနဲ့ တစ်ပိုင်း မတူပါဘူး — ခန်းမ ဘက်က အရင် ပိတ်ပြီး၊ လူအရေအတွက်ကတော့ အဲဒီနောက် အချိန် ပိုရပါတယ်။</p>
+    <div class="grid grid-3">
+      <article class="card"><span class="badge b-blue">− ၅ ပတ် · VENUE</span><h3>ခန်းမ အပိုင်း စာရင်းပိတ်</h3><p>ခန်းမ (venue) ဆီ တင်ရမယ့် အပိုင်းတွေ — program၊ menu၊ venue နဲ့ ဆိုင်တဲ့ အချက်အလက်တွေ — ကို ဒီရက်မှာ စာရင်း ပိတ်ပါတယ်။ အဲဒီနောက် venue ဘက်ကို ပြောင်းလဲမှု တောင်းဖို့ ခက်ပါတယ်။</p></article>
+      <article class="card"><span class="badge b-amber">− ၂ ပတ် · GUEST COUNT</span><h3>လူအရေအတွက် အပြီးသတ်</h3><p>Final headcount ကို ဒီရက် အထိ ပြောင်းလို့ ရပါတယ် — ခန်းမ စာရင်းပိတ် (−၅ ပတ်) ပြီးနောက်လည်း အရေအတွက်ကတော့ ဆက်ညှိလို့ ရပါတယ်။ ဒီနေ့ ကျော်ရင် catering နဲ့ seat အရေအတွက်က ဒီ ကိန်းဂဏန်း အတိုင်း အတည် ဖြစ်သွားပါမယ်။</p></article>
+      <article class="card"><span class="badge b-red">− ၁ ပတ် · DATA LOCK</span><h3>Amoré Data Lock</h3><p>Seating chart၊ paper items စာသားတွေ စတဲ့ Amoré ဘက် data အားလုံး ဒီရက်မှာ ပိတ်ပါတယ် — print နဲ့ ပြင်ဆင်မှုတွေ စလုပ်ပြီးသား ဖြစ်လို့ပါ။</p></article>
+    </div>
+
+    <h3 style="margin:22px 0 4px">Data အပေးအယူ ချောမွတ်အောင် — စည်းကမ်း ၄ ခု</h3>
+    <div class="grid grid-2">
+      <article class="card"><span class="badge b-green">RULE 1</span><h3>နာမည် တစ်ပုံစံတည်း</h3><p>Guest နာမည်တွေကို form၊ guest list၊ seating chart တိုင်းမှာ စာလုံးပေါင်း အတူတူ ရေးပါ။</p></article>
+      <article class="card"><span class="badge b-green">RULE 2</span><h3>တစ်ခါတည်း စုပို့ပါ</h3><p>အချက်တွေကို message တစ်စောင်ထဲမှာ စုပြီး ပို့ပါ။ နည်းနည်း ခွဲခွဲ ပို့ရင် ကျန်သွားတတ်ပါတယ်။</p></article>
+      <article class="card"><span class="badge b-green">RULE 3</span><h3>အပြောင်းအလဲကို ရှင်းရှင်း ရေးပါ</h3><p>“အရင်: ___ → အသစ်: ___” လို ဘာကို ဘာနဲ့ လဲတယ် ဆိုတာ တိတိကျကျ ရေးပေးပါ။</p></article>
+      <article class="card"><span class="badge b-green">RULE 4</span><h3>Version မှတ်ပေးပါ</h3><p>File အသစ် ပို့ရင် နာမည်မှာ <strong>အသစ် / NEW / FINAL</strong> လို့ မှတ်ပါ။ အဟောင်းကို သုံးမိတာ ကာကွယ်ဖို့ပါ။</p></article>
+    </div>
+    <div class="grid grid-2">
+      <article class="card"><span class="badge b-blue">STEP 6 · − ၄ ပတ်</span><h3>ဘယ်တော့ အားလုံး အပြီးသတ် လဲ</h3><p>ပွဲနေ့ <strong>run order</strong> နဲ့ ဧည့်သည် အရေအတွက်ကို <strong>Step 6 (ပွဲမတိုင်ခင် ၄ ပတ်)</strong> မှာ အတည်ပြုပါတယ်။ အဲဒီနောက်ပိုင်း ပြင်ဆင်မှု အားလုံးကို team က ပွဲနေ့အတွက် တာဝန်ယူ ဆောင်ရွက်ပေးသွားပါမယ်။</p></article>
+      <article class="card"><span class="badge b-gold">RETURN GIFTS</span><h3>လက်ဆောင်ပြန်ကမ်း (Return Gift)</h3><p>ဧည့်သည် ဦးရေ အတိအကျကို <strong>RSVP ပြီးမှ</strong> သိနိုင်တာမို့ အရေအတွက်နဲ့ ဒီဇိုင်းကို <strong>RSVP deadline ပြီးနောက်</strong> အတည်ပြုပေးပါ — wedding theme နဲ့ ကိုက်ညီအောင် team က ရွေးချယ်ပေးပါမယ်။</p></article>
+    </div>
+    <p class="section-link">ဒီ အပိုင်းရဲ့ link: <code>#timeline</code></p>
+  </section>
+
+  <!-- 6. STUDIO & FAQ -->
+  <section class="panel" id="panel-studio" role="tabpanel" aria-labelledby="tab-studio" data-panel="studio">
+    <div class="panel-head">
+      <div class="panel-icon i-rose">👗</div>
+      <div><h2>၆။ Studio &amp; မေးလေ့ရှိတဲ့ မေးခွန်းများ</h2><p>Dress viewing / fitting က Studio မှာ appointment နဲ့ လုပ်ပါတယ်။</p></div>
+    </div>
+
+    <div class="card">
+      <h3>Studio — Dress Viewing &amp; Fitting</h3>
+      <p>📍 <strong>Amore Studio</strong> — 〒112-0011 東京都文京区千石4丁目26-2, SANSAN 千石第一ビル301 <span class="small">(dress / accessories viewing &amp; fitting အတွက်)</span> · <a href="https://maps.app.goo.gl/dM8oboxwFcXAee7h6?g_st=ic" target="_blank" rel="noopener">Google Maps ↗</a></p>
+      <ul class="clean">
+        <li>Appointment မယူဘဲ လာလို့ မရပါ — ကြိုပြီး ရက်/အချိန် အတည်ပြုပေးပါ</li>
+        <li>Fitting နေ့မှာ အချိန် အတိအကျ လာပေးပါ၊ နောက်ကျရင် try လုပ်ချိန် နည်းသွားတတ်ပါတယ်</li>
+        <li>ဝတ်ကြည့်ချင်တဲ့ ပုံစံ reference ပုံတွေ ရှိရင် Styling Form မှာ ကြိုထည့်ထားပါ</li>
+      </ul>
+    </div>
+
+    <h3 style="margin:20px 0 6px">FAQ</h3>
+    <details><summary>ဓာတ်ပုံ မရွေးရသေးရင် ဘယ်လို လုပ်ရမလဲ?</summary><p>ရွေးပြီးသား ပုံတွေကို အရင် Folder ခွဲပြီး ပို့ထားပါ (<a href="#share">Photos Share အပိုင်း</a> မှာ ပို့နည်း အသေးစိတ် ရှိပါတယ်)။ နောက်မှ လဲချင်တဲ့ ပုံရှိရင် “အသစ်” လို့ မှတ်ပြီး ထပ်ပို့ပေးပါ — ဘယ်ပုံကို ဘာနဲ့ လဲတယ် ဆိုတာပါ ရေးပေးပါ။</p></details>
+    <details><summary>သီချင်း file မရှိသေးရင်?</summary><p>သီချင်း နာမည်နဲ့ အဆိုတော်ကို MC &amp; Music Form မှာ အရင် ရေးထားပေးပါ။ File ရတဲ့ အခါ scene နာမည် တပ်ပြီး ပို့ပေးပါ။</p></details>
+    <details><summary>Final Lock ပြီးမှ guest ပြောင်းသွားရင်?</summary><p>Lock ပြီးရင် seating နဲ့ paper print တွေ စလုပ်ပြီးသား ဖြစ်လို့ ပြင်ဖို့ ခက်ပါတယ်။ ပြောင်းလဲမှု ရှိတာနဲ့ သိသိချင်း အမြန် ဆက်သွယ်ပေးပါ — လုပ်လို့ ရနိုင်တာ စစ်ပေးပါမယ်။</p></details>
+    <details><summary>Data တွေ ဘယ်ကို ပို့ရမလဲ?</summary><p>ဓာတ်ပုံနဲ့ video လို file ကြီးတွေကို Google Drive folder နဲ့၊ စာသားနဲ့ အချက်အလက်တွေကို form တွေနဲ့ ပို့တာက အရှင်းဆုံးပါ။ Chat ထဲမှာ file ကြီး ပို့ရင် အရည်အသွေး ကျသွားတတ်ပါတယ်။</p></details>
+
+    <details><summary>Makeup trial ရနိုင်ပါသလား?</summary><p>ရနိုင်ပါတယ် — အချိန်ချိန်းဆိုပြီး trial makeup လုပ်လို့ ရပါတယ်။ ကြိုက်တဲ့ style (natural / bold / Japanese-style) ရဲ့ reference ပုံလေးတွေ ရှိရင် ယူလာပေးပါ။</p></details>
+    <details><summary>Studio ကို ဘယ်လို လာရမလဲ?</summary><p>Message နဲ့ အချိန်ချိန်းပေးပါ — ပြီးရင် Studio (千石၊ 文京区) ကို လာပြီး ဝတ်စုံနဲ့ accessories တွေကို ကြည့်ရှု / စမ်းဝတ်နိုင်ပါတယ်။ လိပ်စာက အပေါ်က Studio card မှာ ရှိပါတယ်။</p></details>
+    <details><summary>မေးခွန်း ရှိရင် ဘယ်သူ့ကို မေးရမလဲ?</summary><p>Producer (စာချုပ် ~ kickoff) နဲ့ Planner (Step 5 ကနေ ပွဲနေ့အထိ) — နှစ်ယောက်လုံးက သင့် အခြေအနေကို မြင်တွေ့နိုင်လို့ ဘယ်သူ့ကို ပို့ပို့ အဆင်ပြေပါတယ်။ အသေးစိတ်ကို <a href="#meetings">Meetings အပိုင်း</a> မှာ ကြည့်ပါ။</p></details>
+
+    <div class="callout c-green"><strong>🌸 ကျေးဇူးတင်ပါတယ် —</strong> ဒီ guide အတိုင်း ပြင်ဆင် ပို့ပေးရင် ပွဲနေ့ ပြင်ဆင်မှုတွေ အများကြီး ပိုချောမွတ်သွားပါလိမ့်မယ်။ မရှင်းတာ ရှိရင် ဘယ်အချိန်မဆို မေးပါနော်။</div>
+    <p class="section-link">ဒီ အပိုင်းရဲ့ link: <code>#studio</code></p>
+  </section>
+
+  <!-- 7. TERMS & PRECAUTIONS -->
+  <section class="panel" id="panel-terms" aria-label="Venue Terms and Conditions">
+    <div class="panel-head">
+      <div class="panel-icon i-amber">📜</div>
+      <div><h2>Venue Terms &amp; Conditions · 注意事項</h2><p><strong>Amoré ရဲ့ ကိုယ်ပိုင် Terms &amp; Conditions စာရွက် သီးသန့် လောလောဆယ် မရှိသေးပါဘူး။</strong> အဲဒီအစား သင် ရွေးချယ်ထားတဲ့ ခန်းမ (venue) ရဲ့ Terms &amp; Conditions ကို မှီငြမ်းပြီး လိုက်နာရပါတယ် — စည်းကမ်း ပဋိပက္ခ ဖြစ်လာရင် venue ရဲ့ စာရွက်က အတည်ပါ။ ဒီ အပိုင်းမှာ အဲဒီ သဘောသဘာဝနဲ့ နေ့စဉ် လုပ်ငန်းဆောင်ရွက်မှုမှာ သတိပြုရမယ့် အချက်တွေကို စုထားပါတယ်။</p></div>
+    </div>
+
+    <div class="callout c-blue"><strong>📜 အဓိက စည်းကမ်း = Venue ရဲ့ Terms &amp; Conditions —</strong> Cancellation၊ payment အချိန်ဇယား၊ carry-in fee၊ setup / teardown အချိန်၊ အသံ / မီး ကန့်သတ်ချက် စတာတွေ အားလုံးက venue အလိုက် မတူညီဘဲ သက်ဆိုင်ရာ venue ရဲ့ စည်းကမ်းစာရွက် အတိုင်း ဖြစ်ပါတယ်။ Booking အတည်ပြုချိန်နဲ့ Meeting 2 မှာ team က သင့် venue ရဲ့ terms တွေကို အတူတူ ပြန်ရှင်းပြပေးပါမယ် — မရှင်းတဲ့ အချက် ရှိရင် အဲဒီ အချိန်မှာ မေးပါ။</div>
+
+    <h3 style="margin:18px 0 4px">အတူ လိုက်နာရမယ့် လုပ်ငန်းဆောင်ရွက်မှု အချက်များ</h3>
+    <p class="small" style="margin:0 0 6px">အောက်က အချက်တွေက contract terms မဟုတ်ဘဲ နှစ်ဖက် အဆင်ပြေအောင် သဘောတူထားတဲ့ လုပ်ဆောင်ပုံ မှတ်ချက်တွေပါ။ စည်းကမ်း အတည်က venue ရဲ့ စာရွက် ဖြစ်ပါတယ်။</p>
+    <div class="grid grid-2">
+      <article class="card"><span class="badge b-rose">T1</span><h3>Booking အတည်ပြုမှု</h3><p>Wedding date နဲ့ venue အတည်ပြုပြီး 申込書 တင်ပြီးမှ booking အဖြစ် သတ်မှတ်ပါတယ်။ ရက်ကို အခြား client ကို မပေးခင် အတည်ပြုချက် စောင့်ပေးပါ။</p></article>
+      <article class="card"><span class="badge b-rose">T2</span><h3>Deadline တွေကို လိုက်နာရန်</h3><p><a href="#plan">My Plan</a> ထဲက ရက်တွေက နှစ်ဖက် သဘောတူထားတဲ့ guideline ရက်တွေပါ။ Form၊ ဓာတ်ပုံ၊ သီချင်း / video file တွေ နောက်ကျရင် print၊ vendor စီစဉ်မှု နဲ့ ပွဲနေ့ flow အထိ ထိခိုက်နိုင်ပါတယ်။</p></article>
+      <article class="card"><span class="badge b-rose">T3</span><h3>Lock တွေ — အပိုင်းလိုက် မတူပါ</h3><p>ပိတ်ရက်က တစ်ပိုင်းနဲ့ တစ်ပိုင်း မတူပါဘူး — <strong>ခန်းမ အပိုင်း စာရင်းပိတ် −၅ ပတ်</strong>၊ <strong>လူအရေအတွက် အပြီးသတ် −၂ ပတ်</strong>၊ <strong>Data Lock −၁ ပတ်</strong> (seating / paper စာသားတွေ)။ သက်ဆိုင်ရာ ရက် ကျော်သွားရင် အဲဒီ အပိုင်းကို ပြင်ဖို့ ခက်ပါတယ် — ပြောင်းလဲမှု ရှိရင် သိသိချင်း ဆက်သွယ်ပါ၊ လုပ်လို့ ရနိုင်တာ စစ်ပေးပါမယ်။</p></article>
+      <article class="card"><span class="badge b-rose">T4</span><h3>အချက်အလက် မှန်ကန်မှု</h3><p>Form မှာ ဖြည့်တဲ့ နာမည် စာလုံးပေါင်း၊ အချိန်၊ guest အချက်အလက်တွေရဲ့ မှန်ကန်မှုကို client ဘက်က တာဝန်ယူရပါတယ်။ စာလုံးပေါင်း လွဲပြီး print ထွက်ပြီးမှ ပြင်ရရင် အချိန် / ကုန်ကျစရိတ် ထပ်ဖြစ်နိုင်ပါတယ်။</p></article>
+      <article class="card"><span class="badge b-rose">T5</span><h3>Venue Terms က အတည်</h3><p>Carry-in၊ setup အချိန်၊ အသံ / မီး အသုံးပြုမှု၊ cancellation / payment စတာတွေမှာ venue ရဲ့ Terms &amp; Conditions က အရင် အကျုံးဝင်ပါတယ်။ Venue က ခွင့်မပြုတဲ့ အရာကို Amoré ဘက်ကလည်း လုပ်ပေးလို့ မရပါဘူး။</p></article>
+      <article class="card"><span class="badge b-rose">T6</span><h3>Meeting အစီအစဉ်</h3><p>Client meeting ၄ ကြိမ် ( −၄ လ / −၂ လ / −၁ လ / FINAL −၂ ပတ်) ပါ။ FINAL ပြီးရင် client meeting ထပ် မရှိတော့ပါဘူး။ ရက် ပြောင်းဖို့ လိုရင် အနည်းဆုံး ကြိုပြီး အကြောင်းကြားပေးပါ။</p></article>
+    </div>
+
+    <h3 style="margin:22px 0 4px">注意事項 — သတိပြုရန် အချက်များ</h3>
+    <div class="card">
+      <ul class="check">
+        <li><span><strong>အချိန် တိကျပါ —</strong> fitting / meeting နေ့မှာ နောက်ကျရင် စီစဉ်ထားတဲ့ အချိန် နည်းသွားတတ်ပါတယ်</span></li>
+        <li><span><strong>Allergy / အစားအသောက် ကန့်သတ်ချက် —</strong> <strong>venue တိုင်းက allergy / dietary support မပေးနိုင်ပါဘူး</strong> — တချို့ venue တွေမှာ allergy 対応 လုံးဝ မရှိပါဘူး။ ဒါကြောင့် guest တွေရဲ့ allergy နဲ့ အစားအသောက် ကန့်သတ်ချက်တွေကို <strong>ကြိုတင်</strong> Amoré ကို ပြောပြပြီး၊ ရွေးထားတဲ့ venue က လက်ခံနိုင်မနိုင်ကို <strong>venue မရွေးခင် / booking မလုပ်ခင်ကတည်းက</strong> ကြိုစစ်ထားရပါမယ်။ RSVP နဲ့ အတူ စုပြီး Meeting 3 အထိလည်း နောက်ဆုံး စာရင်း ပေးပါ</span></li>
+        <li><span><strong>File အရည်အသွေး —</strong> print သုံးမယ့် ပုံတွေကို original file အတိုင်း ပို့ပါ၊ chat က ပြန်သိမ်းတဲ့ ပုံက print မှာ ဝါးတတ်ပါတယ်</span></li>
+        <li><span><strong>အပြောင်းအလဲ ဆက်သွယ်နည်း —</strong> “အရင်: ___ → အသစ်: ___” လို့ ရှင်းရှင်း ရေးပြီး message တစ်စောင်ထဲ စုပို့ပါ</span></li>
+        <li><span><strong>ပွဲနေ့ အဖိုးတန် ပစ္စည်းများ —</strong> လက်ဝတ်ရတနာ / စာရွက်စာတမ်း အရေးကြီးတာတွေကို ကိုယ်တိုင် သိမ်းဆည်းပါ၊ team က ပွဲနေ့ flow ကိုပဲ အာရုံစိုက်ရလို့ပါ</span></li>
+        <li><span><strong>မိုးလေဝသ / မမျှော်လင့်တဲ့ အခြေအနေ —</strong> ပွဲနေ့ အစီအစဉ် ပြောင်းဖို့ လိုလာရင် planner ရဲ့ ညွှန်ကြားမှုအတိုင်း အတူတူ ညှိနှိုင်းပါမယ်</span></li>
+      </ul>
+    </div>
+
+    <h3 style="margin:22px 0 4px">Venue အခြေခံ စည်းကမ်းများ — Booking မတိုင်ခင် သိထားရန်</h3>
+    <p class="small" style="margin:0 0 6px">အောက်ပါ အချက်တွေက venue တွေရဲ့ စည်းကမ်းအခြေခံ ဖြစ်ပြီး <strong>ပြောင်းလဲပေးလို့ မရပါဘူး</strong> — booking မလုပ်ခင် အားလုံးကို သေချာ နားလည်ထားပေးပါ။ အတိအကျ အချက်တွေကတော့ သင့် venue ရဲ့ စာရွက် အတိုင်း ဖြစ်ပါတယ်။</p>
+    <div class="grid grid-2">
+      <article class="card"><span class="badge b-amber">V1</span><h3>ရက်စွဲ အတည်ပြုခြင်း</h3><p>Application Form နဲ့ Booking Deposit (申込金) <strong>နှစ်ခုလုံး</strong> ရရှိမှသာ wedding date ကို တရားဝင် reserve လုပ်ပေးပါတယ်။</p></article>
+      <article class="card"><span class="badge b-amber">V2</span><h3>ငွေပေးချေမှု</h3><p>Booking ချိန်မှာ deposit ပေးသွင်းရပြီး၊ ကျန်ငွေကို <strong>မင်္ဂလာနေ့ မတိုင်ခင် နောက်ဆုံး ဘဏ်ဖွင့်ရက် အထိ</strong> ပေးချေရပါမယ်။ Bank transfer fee ကို client ဘက်က ကျခံရပါမယ်။</p></article>
+      <article class="card"><span class="badge b-amber">V3</span><h3>Deposit ပြန်ထုတ်ပေးမှု</h3><p>Deposit က ရက်စွဲကို reserve ထားတဲ့ အတွက် <strong>non-refundable</strong> ပါ — သို့ရာတွင် total cost ထဲမှာ ထည့်သွင်း တွက်ချက်ပေးပါတယ်။</p></article>
+      <article class="card"><span class="badge b-amber">V4</span><h3>Final Guest Count ရက်</h3><p>မင်္ဂလာနေ့ မတိုင်ခင် <strong>၁၄ ရက် အလို</strong>မှာ final guest count ကို အတည်ပြုပေးရပါမယ် — timeline၊ guest count၊ setup၊ flow အားလုံး အပါအဝင်ပါ။</p></article>
+      <article class="card"><span class="badge b-amber">V5</span><h3>ဧည့်သည်ဦးရေ လျော့ကျရင်</h3><p>၁၄ ရက် ကျော်လွန်ပြီးနောက် ဦးရေ လျော့ကျရင် လျော့ကျသူတွေ အတွက်ပါ charge ဖြစ်နိုင်ပြီး၊ သိသိသာသာ လျော့ကျရင် per-person adjustment fee ရှိနိုင်ပါတယ်။ အရာအားလုံး final count အတိုင်း ကြိုတင် order ထားတာမို့ food &amp; service charge က မလျော့ပါဘူး။</p></article>
+      <article class="card"><span class="badge b-amber">V6</span><h3>Cancellation</h3><p>Cancel လုပ်တဲ့ အချိန်ပေါ် မူတည်ပြီး cancellation fee ရှိပါတယ် — စောစော cancel ရင် deposit သာ ဆုံးရှုံးနိုင်ပြီး၊ ပွဲရက်နဲ့ နီးလေလေ total fee အထိ charge ဖြစ်နိုင်လေပါ။</p></article>
+      <article class="card"><span class="badge b-amber">V7</span><h3>ရက်စွဲ ပြောင်းလဲခြင်း</h3><p>မင်္ဂလာနေ့ မတိုင်ခင် <strong>၉၀ ရက်</strong> ထက် စောပြီး ပြောင်းရင် change fee မရှိပါ။ နီးကပ်လာရင် change fee + အမှန်တကယ် ကုန်ကျစရိတ် ရှိနိုင်ပြီး၊ <strong>၁ နှစ်ကျော်</strong> ရွှေ့ရင် cancellation အဖြစ် သတ်မှတ်ပါတယ်။</p></article>
+      <article class="card"><span class="badge b-amber">V8</span><h3>ယူဆောင်ခွင့် မပြုတဲ့ အရာများ</h3><p>အပြင်က အစားအစာ / အရက် (food safety နဲ့ venue စည်းကမ်း အရ — <strong>baby food ကိုတော့ ကြိုအသိပေးရင် ခွင့်ပြုပါတယ်</strong>)၊ ခန်းမ အချို့မှာတော့ gift / return gift တွေပါ ပါဝင်ပါတယ်။</p></article>
+      <article class="card"><span class="badge b-amber">V9</span><h3>အချိန် ကျော်လွန်ခြင်း</h3><p>Venue အသုံးပြုချိန် ကျော်လွန်ရင် extra room fee ရှိနိုင်ပြီး၊ နောက်မှာ ဆက်တိုက် event ရှိနေရင် extension ရနိုင်မယ် မဟုတ်ပါဘူး။</p></article>
+      <article class="card"><span class="badge b-amber">V10</span><h3>ပစ္စည်း ပျက်စီးမှု</h3><p>Guest / vendor / client ကြောင့် (ကလေးများ၊ အရက်မူးသူများ အပါအဝင်) ပျက်စီးမှု ဖြစ်ရင် repair cost + damage fee ကို client ဘက်က တာဝန်ယူရပါမယ်။</p></article>
+      <article class="card"><span class="badge b-amber">V11</span><h3>မမျှော်လင့်တဲ့ အခြေအနေ (ငလျင် / ကပ်ရောဂါ)</h3><p>အခြေအနေပေါ် မူတည်ပါတယ် — Government restriction ကြောင့် ပွဲ မဖြစ်နိုင်ရင် contract auto-cancel ဖြစ်နိုင်ပြီး၊ refund / adjustment ကို venue policy နဲ့အညီ ဆောင်ရွက်ပေးပါမယ်။</p></article>
+      <article class="card"><span class="badge b-amber">V12</span><h3>ပြင်ဆင်ချိန် အပို ကုန်ကျစရိတ်</h3><p>အလှဆင်ပြင်ဆင်မှု (decoration preparation)၊ rehearsal နဲ့ ပွဲမတိုင်ခင် ဓာတ်ပုံရိုက်ကူးမှု (pre-event shooting) အတွက် လိုအပ်တဲ့ အချိန်ကို ပုံမှန်အားဖြင့် <strong>Venue Rental Fee အပို</strong> အဖြစ် တွက်ချက်ပြီး quote ထဲမှာ ထည့်သွင်းပေးပါမယ်။</p></article>
+    </div>
+
+    <div class="callout c-blue"><strong>💴 ငွေကြေး အချက်များ အကြောင်း —</strong> Deposit၊ payment အချိန်ဇယား၊ cancellation စတဲ့ ငွေကြေး စည်းကမ်းတွေက <strong>venue ရဲ့ Terms &amp; Conditions</strong> နဲ့ booking စာရွက်တွေမှာ အတိအကျ ပါပါတယ် — Amoré ရဲ့ ကိုယ်ပိုင် စည်းကမ်းစာရွက် သီးသန့် မရှိသေးပါဘူး။ မရှင်းတဲ့ အချက် ရှိရင် team ကို တိုက်ရိုက် မေးပါ။</div>
+    <p class="section-link">ဒီ အပိုင်းရဲ့ link: <code>#terms</code></p>
+  </section>
+
+  <!-- 8. PHOTO SHARE -->
+  <section class="panel" id="panel-share" role="tabpanel" aria-labelledby="tab-share" data-panel="share">
+    <div class="panel-head">
+      <div class="panel-icon i-green">🖼️</div>
+      <div><h2>၇။ ဓာတ်ပုံ Share — Drive Folder နဲ့ ပို့နည်း</h2><p>ဓာတ်ပုံတွေကို Google Drive မှာ Folder ၃ ခု ခွဲပြီး link share ပို့ပေးပါ။ Folder နာမည်ကို အင်္ဂလိပ်လို အတိအကျ ဒီအတိုင်း ထားပေးပါ။</p></div>
+    </div>
+
+    <div class="folder-tree">
+      📁 <b>Wedding Photos — [Your Names]</b><br>
+      &nbsp;&nbsp;├─ 📁 <b>For Invitation</b><br>
+      &nbsp;&nbsp;├─ 📁 <b>For Photoboard Print</b><br>
+      &nbsp;&nbsp;└─ 📁 <b>For Other Paper Items</b>
+    </div>
+
+    <div class="callout c-green"><strong>💡 အရေးကြီး မှတ်ချက် —</strong> ဓာတ်ပုံတွေကို <strong>Folder ၃ ခု ခွဲပြီး</strong> ပို့ပါ — ရောထည့်လိုက်ရင် ဘယ်ပုံကို ဘယ်နေရာမှာ သုံးရမလဲ ခွဲရခက်ပြီး အချိန် ကြန့်ကြာတတ်ပါတယ်။</div>
+
+    <div class="grid">
+      <article class="card">
+        <span class="badge b-green">FOLDER 1</span>
+        <h3>For Invitation</h3>
+        <p>Web Invitation မှာ သုံးမယ့် ပုံတွေ ထည့်ပါ။</p>
+        <ul class="check">
+          <li><span><strong>Cover ပုံ — ၁ ပုံ</strong> (အလှဆုံး၊ မျက်နှာ ရှင်းရှင်း မြင်ရတဲ့ ပုံ)</span></li>
+          <li><span><strong>Profile ပုံ — တစ်ယောက် ၁ ပုံစီ</strong></span></li>
+          <li><span><strong>Couple ပုံ — ၅ ပုံ ဝန်းကျင်</strong></span></li>
+          <li><span>လင်းပြီး ကြည်လင်တဲ့ ပုံကို ရွေးပါ၊ dark / blur ပုံ မသုံးပါနဲ့</span></li>
+        </ul>
+      </article>
+      <article class="card">
+        <span class="badge b-gold">FOLDER 2</span>
+        <h3>For Photoboard Print</h3>
+        <p>Welcome board / photoboard print ထုတ်ဖို့ သုံးမယ့် ပုံတွေပါ။</p>
+        <ul class="check">
+          <li><span><strong>Original file အတိုင်း</strong> တင်ပါ — အရည်အသွေး အပြည့် လိုပါတယ်</span></li>
+          <li><span>Screenshot၊ Messenger / LINE က ပြန်သိမ်းထားတဲ့ ပုံ မသုံးပါနဲ့ — print မှာ ဝါးသွားတတ်ပါတယ်</span></li>
+          <li><span>အကြီးဆုံး size ရှိတဲ့ မူရင်း ဖိုင်ကို ရွေးပါ</span></li>
+        </ul>
+      </article>
+      <article class="card">
+        <span class="badge b-blue">FOLDER 3</span>
+        <h3>For Other Paper Items</h3>
+        <p>Guest name card၊ seating chart စတဲ့ paper items တွေအတွက် လိုတဲ့ ပုံတွေ ထည့်ပါ။</p>
+        <ul class="check">
+          <li><span>Paper item တစ်ခုချင်းအတွက် သုံးမယ့် ပုံကို ဒီ folder ထဲ စုထည့်ပါ</span></li>
+          <li><span>ဘယ် item အတွက် ဆိုတာ file နာမည်မှာ ရေးပေးရင် ပိုရှင်းပါတယ်</span></li>
+        </ul>
+        <code class="file">ဥပမာ file နာမည်များ
+01_cover.jpg
+02_profile_groom.jpg
+03_profile_bride.jpg
+04_couple_01.jpg</code>
+      </article>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card"><h3 style="color:var(--green)">✓ ဒီလို ပို့ပါ</h3><ul class="check"><li><span>Drive folder link ကို share လုပ်ပြီး ပို့ပါ</span></li><li><span>Folder ၃ ခု ခွဲပြီးမှ link ပို့ပါ</span></li><li><span>ပုံ အသစ် လဲရင် file နာမည် နောက်မှာ <strong>“အသစ်” / NEW</strong> လို့ မှတ်ပေးပါ</span></li></ul></div>
+      <div class="card"><h3 style="color:var(--red)">✕ ဒီလို မပို့ပါနဲ့</h3><ul class="check cross"><li><span>ပုံတွေကို chat ထဲမှာ တစ်ပုံချင်း ခွဲပို့တာ</span></li><li><span>Compressed ဖြစ်သွားတဲ့ screenshot ပုံတွေ</span></li><li><span>ဘယ် folder မှန်း မသိအောင် ပုံအားလုံး ရောထည့်တာ</span></li></ul></div>
+    </div>
+    <div class="card">
+      <span class="badge b-green">DELIVERY</span>
+      <h3>ပွဲပြီး ဓာတ်ပုံ / Video ဘယ်တော့ ရမလဲ</h3>
+      <p>Highlight video နဲ့ ဓာတ်ပုံတွေကို ပုံမှန်အားဖြင့် ပွဲပြီးနောက် <strong>၄–၆ ပတ် အတွင်း</strong> ပြီးစီးအောင် ပို့ပေးပါတယ်။ မဖြစ်မနေ ရိုက်ထားစေချင်တဲ့ shot list (family photo၊ must-have moments စသည်) ရှိရင် <strong>ကြိုတင် ပြောပြပေးပါ</strong> — ပွဲနေ့မှာ အဲဒီ အခိုက်အတန့်တွေကို မလွတ်အောင် စီစဉ်ပေးပါမယ်။</p>
+    </div>
+    <p class="section-link">ဒီ အပိုင်းရဲ့ link: <code>#share</code></p>
+  </section>
+
+  </main>
+  </div><!-- /.layout -->
+
+  <footer class="foot">
+    <div class="en">Amoré Wedding Tokyo</div>
+    Wedding Planning &amp; Producing · Tokyo<br>
+    ဒီ guide ကို team က ပို့ပေးတဲ့ link ကနေ အချိန်မရွေး ပြန်ဖတ်လို့ ရပါတယ်။
+  </footer>
+</div>
+
+<!-- Terms & Conditions popup paper (the terms panel is moved in here by script) -->
+<div class="modal-backdrop" id="terms-backdrop" hidden>
+  <div class="modal-paper" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title">
+    <div class="modal-head">
+      <h2 id="terms-modal-title">📜 Terms &amp; Conditions · 注意事項</h2>
+      <button type="button" class="modal-close" id="terms-close">✕ ပိတ်ရန်</button>
+    </div>
+    <div class="modal-body" id="terms-modal-body"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var VALID = ["plan","forms","photos","music","meetings","timeline","studio","share"];
+  function currentFromHash(){
+    var h = (window.location.hash || "").replace("#","");
+    return VALID.indexOf(h) >= 0 ? h : "plan";
+  }
+  function activate(name, focusPanel){
+    VALID.forEach(function(n){
+      var tab = document.querySelector('[data-tab="'+n+'"]');
+      var panel = document.querySelector('[data-panel="'+n+'"]');
+      var on = n === name;
+      if(tab) tab.setAttribute("aria-selected", on ? "true" : "false");
+      if(panel) panel.classList.toggle("active", on);
+    });
+    closeSidebar();
+    if(focusPanel){
+      var activePanel = document.querySelector('[data-panel="'+name+'"]');
+      if(activePanel){ activePanel.setAttribute("tabindex","-1"); }
+    }
+  }
+  /* ---------- Sidebar drawer (mobile / tablet) ---------- */
+  var sidebar = document.getElementById("sidebar");
+  var scrim = document.getElementById("sidebar-scrim");
+  var menuBtn = document.getElementById("sidebar-open");
+  function openSidebar(){
+    if(!sidebar) return;
+    sidebar.classList.add("open");
+    if(scrim) scrim.classList.add("show");
+    if(menuBtn) menuBtn.setAttribute("aria-expanded","true");
+  }
+  function closeSidebar(){
+    if(!sidebar) return;
+    sidebar.classList.remove("open");
+    if(scrim) scrim.classList.remove("show");
+    if(menuBtn) menuBtn.setAttribute("aria-expanded","false");
+  }
+  if(menuBtn) menuBtn.addEventListener("click", openSidebar);
+  var sidebarClose = document.getElementById("sidebar-close");
+  if(sidebarClose) sidebarClose.addEventListener("click", closeSidebar);
+  if(scrim) scrim.addEventListener("click", closeSidebar);
+
+  /* ---------- Terms & Conditions popup ---------- */
+  var backdrop = document.getElementById("terms-backdrop");
+  var modalBody = document.getElementById("terms-modal-body");
+  var termsPanel = document.getElementById("panel-terms");
+  // The terms "paper" lives inside the popup, not as a tab panel.
+  if(termsPanel && modalBody){ modalBody.appendChild(termsPanel); }
+  var lastFocus = null;
+  function openTerms(){
+    if(!backdrop) return;
+    lastFocus = document.activeElement;
+    backdrop.hidden = false;
+    document.body.classList.add("modal-open");
+    var paper = backdrop.querySelector(".modal-paper");
+    if(paper) paper.scrollTop = 0;
+    var closeBtn = document.getElementById("terms-close");
+    if(closeBtn) closeBtn.focus();
+  }
+  function closeTerms(){
+    if(!backdrop) return;
+    backdrop.hidden = true;
+    document.body.classList.remove("modal-open");
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.querySelectorAll(".terms-open-btn").forEach(function(b){
+    b.addEventListener("click", openTerms);
+  });
+  var termsClose = document.getElementById("terms-close");
+  if(termsClose) termsClose.addEventListener("click", closeTerms);
+  if(backdrop) backdrop.addEventListener("click", function(e){ if(e.target === backdrop) closeTerms(); });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){ closeTerms(); closeSidebar(); }
+  });
+
+  // Clicking a tab: let the anchor set the hash naturally; activate immediately for snappiness.
+  document.querySelectorAll("[data-tab]").forEach(function(tab){
+    tab.addEventListener("click", function(){
+      activate(tab.getAttribute("data-tab"), false);
+    });
+  });
+  // In-page links like href="#music" inside panels should also switch tabs; #terms opens the popup.
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(){
+      var h = a.getAttribute("href").replace("#","");
+      if(h === "terms"){ openTerms(); return; }
+      if(VALID.indexOf(h) >= 0){ closeTerms(); activate(h, false); }
+    });
+  });
+  window.addEventListener("hashchange", function(){
+    if((window.location.hash || "") === "#terms"){ openTerms(); return; }
+    closeTerms();
+    activate(currentFromHash(), false); window.scrollTo({top:0, behavior:"smooth"});
+  });
+  // Initial load: open the tab named in the URL hash (e.g. #photos sent to a client).
+  activate(currentFromHash(), false);
+  if((window.location.hash || "") === "#terms") openTerms();
+
+  /* ---------- Wedding date calculator (Amoré guideline) ---------- */
+  var dateInput = document.getElementById("wedding-date");
+  var output = document.getElementById("calc-output");
+  var DOW = ["Sun · တနင်္ဂနွေ","Mon · တနင်္လာ","Tue · အင်္ဂါ","Wed · ဗုဒ္ဓဟူး","Thu · ကြာသပတေး","Fri · သောကြာ","Sat · စနေ"];
+  function addDays(d, n){ var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() + n); return x; }
+  function addMonths(d, n){ var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setMonth(x.getMonth() + n); return x; }
+  function fmt(d){
+    return d.getFullYear() + " / " + (d.getMonth()+1) + " / " + d.getDate();
+  }
+  var lastPlan = null; // { W: wedding Date, items: [ {d, title, body}, ... ] } — drives the .ics download + Google Calendar links
+  var icsArea = document.getElementById("ics-area");
+  var gcalList = document.getElementById("gcal-list");
+  function buildGcalUrl(item, wStr){
+    var text = encodeURIComponent("Amoré Wedding — " + item.title);
+    var dates = icsDate(item.d) + "/" + icsDate(addDays(item.d, 1));
+    var details = encodeURIComponent(item.body + " (Wedding date: " + wStr + " · Amoré Wedding Tokyo)");
+    return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + text + "&dates=" + dates + "&details=" + details;
+  }
+  function escapeHtml(s){
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function renderPlan(){
+    if(!dateInput || !output) return;
+    var v = dateInput.value;
+    if(!v){ lastPlan = null; if(icsArea) icsArea.hidden = true; if(gcalList) gcalList.innerHTML = ""; output.innerHTML = '<div class="calc-empty">📅 အပေါ်မှာ wedding date ရွေးလိုက်ရင် သင့် deadline စာရင်း ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>'; return; }
+    var parts = v.split("-");
+    var W = new Date(parseInt(parts[0],10), parseInt(parts[1],10)-1, parseInt(parts[2],10));
+    var today = new Date(); today.setHours(0,0,0,0);
+    var daysLeft = Math.round((W - today) / 86400000);
+    var m1 = addMonths(W, -4);
+    var ms = [
+      { d: addDays(m1, -14), tag: "−၄ လ −၂ ပတ်", title: "Form အားလုံး အပြီးဖြည့်ရန်", body: "申込書 · MC & Music · Styling · Web Invitation Form — Meeting 1 မတိုင်ခင် ၂ ပတ် အလိုမှာ အပြီးဖြည့်ပါ။", link: "forms" },
+      { d: m1, tag: "− ၄ လ", title: "Meeting 1 — ပုံစံ အကြမ်း သတ်မှတ်ခြင်း", body: "Vibe / ဦးစားပေး အချက်၊ budget၊ guest ခန့်မှန်း၊ venue။ Agenda ကို Meetings tab မှာ ကြည့်ပါ။", link: "meetings" },
+      { d: addDays(W, -82), tag: "−၂ လခွဲ −၁ ပတ်", title: "ဓာတ်ပုံ Drive Link ပို့ရန်", body: "Cover / profile / couple ပုံတွေကို Folder ခွဲပြီး invitation ထုတ်ဖို့ ပြင်ဆင်ချိန် အလို့ငှာ ဒီရက် အထိ ပို့ပါ။", link: "share" },
+      { d: addDays(W, -75), tag: "− ၂ လခွဲ", title: "Web Invitation ဖိတ်ကြားစတင်ရန်", body: "ဖိတ်စာ အပြီးသတ် ပြီး guest တွေဆီ စတင် ဖိတ်ကြားရမယ့် အချိန်ပါ။", link: "photos" },
+      { d: addMonths(W, -2), tag: "− ၂ လ", title: "Meeting 2 — Venue & Vendor အတည်ပြုခြင်း", body: "Venue စည်းကမ်း၊ carry-in၊ vendor တွေ နဲ့ decoration concept အတည်ပြုပါ။", link: "meetings" },
+      { d: addMonths(W, -1), tag: "− ၁ လ", title: "Meeting 3 + Decoration PIC Meeting", body: "Program၊ seating၊ paper items အသေးစိတ် ညှိပါ။ Decoration တာဝန်ခံ meeting လည်း ဒီနေ့ဝန်းကျင်မှာပါ။", link: "meetings" },
+      { d: addDays(addMonths(W, -1), -7), tag: "RSVP −၁ ပတ်", title: "RSVP နောက်လိုက် သတိပေးရန်", body: "အဖြေ မရသေးတဲ့ guest တွေကို သတိပေးဖို့ အချိန်ပါ — team ကလည်း ဒီ အချိန်မှာ လိုက်လံ မေးမြန်းပေးပါတယ်။", link: "timeline" },
+      { d: addDays(W, -35), tag: "− ၅ ပတ် · VENUE", title: "ခန်းမ အပိုင်း စာရင်းပိတ်", body: "Venue ဆီ တင်ရမယ့် အပိုင်းတွေ (program / menu / venue နဲ့ ဆိုင်တဲ့ အချက်အလက်တွေ) ဒီနေ့မှာ စာရင်း ပိတ်ပါတယ်။ Lock ရက်တွေ အပိုင်းလိုက် မတူတာ သတိပြုပါ — လူအရေအတွက်ကတော့ −၂ ပတ် အထိ ပြောင်းလို့ ရပါသေးတယ်။", link: "timeline" },
+      { d: addMonths(W, -1), tag: "− ၁ လ", title: "RSVP Deadline — Final Guest List ပေးရန်", body: "Guest တွေ အဖြေ ပြန်ပေးရမယ့် နောက်ဆုံးရက်။ Final guest list ကို ဒီနေ့မှာ team ကို ပေးပါ။", link: "timeline" },
+      { d: addDays(W, -14), tag: "− ၂ ပတ် · COUNT", title: "လူအရေအတွက် အပြီးသတ်", body: "Final headcount ကို အပြီးသတ် အတည်ပြုရမယ့် နောက်ဆုံးရက်ပါ — ခန်းမ စာရင်းပိတ် (−၅ ပတ်) ပြီးနောက်လည်း ဒီနေ့ အထိ အရေအတွက် ပြောင်းလို့ ရပါတယ်။ FINAL meeting နဲ့ တစ်ရက်တည်း ကျပါတယ်။", link: "timeline" },
+      { d: addDays(W, -14), tag: "− ၂ ပတ်", title: "FINAL Meeting + MC Final", body: "Guest စာရင်း၊ timeline၊ MC စာသား အားလုံး နောက်ဆုံး စစ်ပါ။ သီချင်း / video file အားလုံး လည်း ဒီနေ့ အထိ အပြီးပို့ပါ။", link: "meetings" },
+      { d: addDays(W, -7), tag: "− ၁ ပတ် · LOCK", title: "Final Lock — Data အားလုံး ပိတ်သိမ်း", body: "Guest အရေအတွက်၊ seating၊ စာသားတွေ အပြီးသတ်။ ဒီနောက်ပိုင်း ပြင်လို့ မရတော့ပါဘူး။", link: "timeline" },
+      { d: W, tag: "WEDDING DAY", title: "💒 Wedding Day", body: "ပွဲနေ့ ရောက်ပါပြီ — အစီအစဉ် အတိုင်း ပျော်ရွှင်စွာ ဆင်နွှဲပါ။", link: null }
+    ];
+    var html = "";
+    if(daysLeft > 0){ html += '<span class="count-chip">💒 ပွဲနေ့အထိ ' + daysLeft + ' ရက် လိုပါသေးတယ်</span>'; }
+    else if(daysLeft === 0){ html += '<span class="count-chip">💒 ဒီနေ့က ပွဲနေ့ပါပဲ — ပျော်ရွှင်ပါစေ!</span>'; }
+    else { html += '<span class="count-chip">ရွေးထားတဲ့ ရက်က လွန်သွားပါပြီ — ရက်ပြန်စစ်ပေးပါ</span>'; }
+    html += '<ul class="ms-list">';
+    ms.forEach(function(item){
+      var past = item.d < today && daysLeft >= 0;
+      html += '<li class="ms-item' + (past ? ' past' : '') + '"><div class="ms-date">' + fmt(item.d) + '<span class="dow">' + DOW[item.d.getDay()] + '</span></div><div class="ms-body"><b>' + item.title + '<span class="ms-tag">' + (past ? 'လွန်သွား' : item.tag) + '</span></b>' + item.body + (item.link ? ' <a href="#' + item.link + '">အသေးစိတ် →</a>' : '') + '</div></li>';
+    });
+    html += '</ul>';
+    html += '<p class="calc-note">ရက်တွေ အားလုံးက guideline ခန့်မှန်း ရက်တွေပါ — meeting ရက် အတိအကျကို team နဲ့ ညှိပြီး အတည်ပြုရပါမယ်။</p>';
+    output.innerHTML = html;
+    lastPlan = { W: W, items: ms };
+    if(icsArea) icsArea.hidden = false;
+    if(gcalList){
+      var wStr = fmt(W);
+      var ghtml = "";
+      ms.forEach(function(item){
+        var url = buildGcalUrl(item, wStr);
+        ghtml += '<li class="gcal-item"><div class="gcal-meta"><div class="gcal-date">' + fmt(item.d) + ' · ' + escapeHtml(item.tag) + '</div><div class="gcal-title">' + escapeHtml(item.title) + '</div></div><a class="gcal-add" href="' + url + '" target="_blank" rel="noopener">＋ Add</a></li>';
+      });
+      gcalList.innerHTML = ghtml;
+    }
+    // Re-wire the in-output hash links so they switch tabs.
+    output.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener("click", function(){
+        var h = a.getAttribute("href").replace("#","");
+        if(VALID.indexOf(h) >= 0) activate(h, false);
+      });
+    });
+  }
+  if(dateInput){ dateInput.addEventListener("change", renderPlan); dateInput.addEventListener("input", renderPlan); }
+
+  /* ---------- Calendar (.ics) download — same dates as the on-screen plan ---------- */
+  function pad2(n){ return (n < 10 ? "0" : "") + n; }
+  function icsDate(d){ return d.getFullYear() + pad2(d.getMonth()+1) + pad2(d.getDate()); }
+  function icsStamp(){
+    var n = new Date();
+    return n.getUTCFullYear() + pad2(n.getUTCMonth()+1) + pad2(n.getUTCDate()) + "T" + pad2(n.getUTCHours()) + pad2(n.getUTCMinutes()) + pad2(n.getUTCSeconds()) + "Z";
+  }
+  function icsEscape(s){
+    return String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+  }
+  // Fold long content lines at 75 octets without splitting multi-byte characters (RFC 5545 §3.1).
+  function icsFold(line){
+    var out = "", len = 0;
+    for(var i = 0; i < line.length; i++){
+      var code = line.charCodeAt(i);
+      var ch = line.charAt(i), bytes;
+      if(code >= 0xD800 && code <= 0xDBFF && i + 1 < line.length){ ch += line.charAt(i + 1); i++; bytes = 4; }
+      else { bytes = code < 0x80 ? 1 : (code < 0x800 ? 2 : 3); }
+      if(len + bytes > 75){ out += "\r\n "; len = 1; }
+      out += ch; len += bytes;
+    }
+    return out;
+  }
+  function buildICS(){
+    if(!lastPlan) return null;
+    var stamp = icsStamp();
+    var wStr = fmt(lastPlan.W);
+    var lines = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Amore Wedding Tokyo//Client Plan//EN",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+      "X-WR-CALNAME:Amoré Wedding — Plan (" + wStr + ")"
+    ];
+    lastPlan.items.forEach(function(item, idx){
+      lines.push("BEGIN:VEVENT");
+      lines.push("UID:amore-plan-" + icsDate(lastPlan.W) + "-" + idx + "-" + stamp + "@amore-wedding-tokyo");
+      lines.push("DTSTAMP:" + stamp);
+      lines.push("DTSTART;VALUE=DATE:" + icsDate(item.d));
+      lines.push("DTEND;VALUE=DATE:" + icsDate(addDays(item.d, 1)));
+      lines.push("SUMMARY:" + icsEscape("Amoré Wedding — " + item.title));
+      lines.push("DESCRIPTION:" + icsEscape(item.body + " (Wedding date: " + wStr + " · Amoré Wedding Tokyo — guideline ရက်များ၊ အတိအကျကို team နဲ့ ညှိပါ)"));
+      lines.push("END:VEVENT");
+    });
+    lines.push("END:VCALENDAR");
+    return lines.map(icsFold).join("\r\n") + "\r\n";
+  }
+  var icsBtn = document.getElementById("ics-download");
+  if(icsBtn){
+    icsBtn.addEventListener("click", function(){
+      var ics = buildICS();
+      if(!ics) return;
+      var blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "amore-wedding-plan.ics";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+    });
+  }
+})();
+</script>
+</body>
 </html>
